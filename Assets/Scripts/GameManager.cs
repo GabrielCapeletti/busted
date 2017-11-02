@@ -22,7 +22,9 @@ public class GameManager : MonoBehaviour {
         }
     }
     #endregion
-    
+
+    public GameObject blackscreen;
+
     [SerializeField]
     private Transform slotContainer;
 

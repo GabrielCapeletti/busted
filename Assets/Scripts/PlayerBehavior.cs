@@ -34,7 +34,7 @@ public class PlayerBehavior : BaseCharacter {
         }
     }
 
-    private void OnIdleEnter() {
+    protected void OnIdleEnter() {
         this.animator.Play("idle");
         this.stateUpdate = this.OnWaitAnim;
     }

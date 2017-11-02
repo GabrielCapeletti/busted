@@ -204,4 +204,12 @@ public class CharacterAI : BaseCharacter {
         if(this.stateUpdate != null)
             this.stateUpdate.Invoke();
     }
+
+    public void JudgeMode()
+    {
+        this.animator.Play("handsUp");
+        spriteRenderer.sortingLayerName = "Front";
+
+        this.stateUpdate = null;
+    }
 }
