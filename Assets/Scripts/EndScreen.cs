@@ -58,8 +58,8 @@ public class EndScreen : MonoBehaviour {
 
             policeTween.SetDuration(0.5f);
 
-
             PositionArrow(posX);
+            arrow.gameObject.SetActive(true);
 
             PotaTween tween = PotaTween.Create(suspects[i].gameObject);
             tween.SetPosition(suspects[i].transform.position, new Vector3(posX, -2));
