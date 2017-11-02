@@ -36,19 +36,19 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        SaveSlots();
-        SetupCharacters();
+        this.SaveSlots();
+        this.SetupCharacters();
     }
 
     private void SetupCharacters()
     {
-        totalOfCharacters = Mathf.Clamp(totalOfCharacters, 0, positionSlots.Count - 1);
+        this.totalOfCharacters = Mathf.Clamp(this.totalOfCharacters, 0, this.positionSlots.Count - 1);
 
         int index = 0;
 
-        while (index < totalOfCharacters)
+        while (index < this.totalOfCharacters)
         {
-            GameObject character = GameObject.Instantiate(characterModel);
+            GameObject character = Instantiate(this.characterModel);
             Spot spot = SpotManager.Instance.FindNextPosition();
             character.GetComponent<CharacterAI>().SetCurrentSpot(spot);
             character.SendMessage("MoveTo", spot.transform.position);
@@ -59,13 +59,13 @@ public class GameManager : MonoBehaviour {
 
     private void SaveSlots()
     {
-        positionSlots = new List<Vector3>();
+        this.positionSlots = new List<Vector3>();
 
         int index = 0;
 
-        while (index < slotContainer.childCount)
+        while (index < this.slotContainer.childCount)
         {
-            positionSlots.Add(slotContainer.GetChild(index).position);
+            this.positionSlots.Add(this.slotContainer.GetChild(index).position);
             index++;
         }
     }

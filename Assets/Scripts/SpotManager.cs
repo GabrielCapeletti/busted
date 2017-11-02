@@ -58,11 +58,9 @@ public class SpotManager : MonoBehaviour {
         if (this.recursiveCounter > 1000) {
             this.recursiveCounter = 0;
             return null;
-        } else {
-            this.FindNextPosition();
         }
 
-        return null;
+        return this.FindNextPosition();
     }
 
     public Spot FindNextPosition() {

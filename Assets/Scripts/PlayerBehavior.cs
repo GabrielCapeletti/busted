@@ -1,34 +1,85 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBehavior : BaseCharacter {
+public class PlayerPoliceBehavior : BaseCharacter {
 
     [SerializeField]
     private float speed = 2;
 
     private Vector3 direction;
     private GameManager manager;
+    private Action stateUpdate;
+    private float timer;
+    private double stateTime;
 
     protected override void Start()
     {
-        manager = GameManager.Instance;
+        this.manager = GameManager.Instance;
         base.Start();
+    }
+
+    private void OnWaitAnim() {
+        if (direction.magnitude > 0) {
+            this.stateUpdate = this.OnMoveEnter;
+        }
+
+        this.timer += Time.deltaTime;
+        if (this.timer > this.stateTime) {
+            this.EndState();
+        }
+    }
+
+    private void OnIdleEnter() {
+        this.animator.Play("idle");
+        this.stateUpdate = this.OnWaitAnim;
+    }
+    private void OnDanceEnter() {
+        this.animator.Play("jump");
+        this.stateTime = 1;
+        this.stateUpdate = this.OnWaitAnim;
+    }
+    private void OnTalkEnter() {
+        this.animator.Play("idle");
+        this.stateTime = 1;
+        this.stateUpdate = this.OnWaitAnim;
+    }
+    
+
+    #region MOVE
+    private void OnMoveEnter() {
+        this.animator.Play("run");
+        this.stateUpdate = this.OnMove;
+    }
+
+    private void OnMove() {
+        if (direction.magnitude <= 0) {
+            this.stateUpdate = this.EndState;
+            return;
+        }
+
+        Vector3 nextPos = this.transform.position + (direction * this.speed * Time.deltaTime);
+        if (Physics2D.OverlapCircle(nextPos,0.1f) == null) {
+            this.MoveTo(nextPos);
+        }
+    }
+    #endregion
+
+    private void EndState() {
+        this.timer = 0;
+        float rnd = UnityEngine.Random.Range(0f, 1f);
+        if (rnd < 0.51f) {
+            this.stateUpdate = this.OnDanceEnter;
+        } else {
+            this.stateUpdate = this.OnIdleEnter;
+        }
     }
 
     protected override void Update()
     {
-        Vector3 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        if (direction.magnitude > 0)
-        {
-            Vector3 nextPos = transform.position + (direction * speed * Time.deltaTime);
-
-            if (Physics2D.OverlapCircle(nextPos, 0.1f) == null)
-            {
-                MoveTo(nextPos);
-            }
-        }
+        direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        this.stateUpdate.Invoke();
     }
 
 }

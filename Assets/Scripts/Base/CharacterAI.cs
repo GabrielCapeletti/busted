@@ -83,7 +83,7 @@ public class CharacterAI : BaseCharacter {
 
     #region MOVE
     private void OnMoveEnter() {
-        Debug.Log("OnMoveEnter");
+        //Debug.Log("OnMoveEnter");
 
         this.oldSpot = this.currentSpot;
         this.currentSpot = SpotManager.Instance.FindNextPosition();
@@ -158,12 +158,7 @@ public class CharacterAI : BaseCharacter {
         }
     }
 
-    
-
     protected override void Update() {
         this.stateUpdate.Invoke();
     }
-
-
-
 }
