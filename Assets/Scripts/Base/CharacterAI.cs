@@ -51,7 +51,7 @@ public class CharacterAI : BaseCharacter {
     private void OnDanceEnter() {
         //pLAY ANIMATION
         //Debug.Log("Dance");
-        this.animator.Play("jump");
+        this.animator.Play("dance");
         this.stateTime = 2;
         this.stateUpdate = this.OnDance;
     }
@@ -100,7 +100,7 @@ public class CharacterAI : BaseCharacter {
         this.currentSpot.IsFree = false;
         this.animator.Play("run");
         this.targetPosition = this.currentSpot.transform.position;
-        this.spriteRenderer.flipX = this.targetPosition.x > this.transform.position.x;
+        this.spriteRenderer.flipX = this.targetPosition.x < this.transform.position.x;
         this.startPosition = this.transform.position;
         this.duration = Vector2.Distance(this.targetPosition, this.transform.position)/ this.speed;
         this.stateUpdate = this.OnMove;
