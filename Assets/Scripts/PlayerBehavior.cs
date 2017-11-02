@@ -19,6 +19,7 @@ public class PlayerBehavior : BaseCharacter {
         base.Start();
         this.manager = GameManager.Instance;
         this.stateUpdate = this.OnIdleEnter;
+        this.MoveTo(this.transform.position);
     }
 
     private void OnWaitAnim() {
