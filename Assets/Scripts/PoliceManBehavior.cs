@@ -37,11 +37,12 @@ public class PoliceManBehavior : PlayerBehavior {
 
         if (colliders.Length > 0)
         {
+            int maxSuspects = 3;
             spriteRenderer.sortingLayerName = "Front";
 
             List<GameObject> suspects = new List<GameObject>();
 
-            for (int i = 0; i < colliders.Length; i++)
+            for (int i = 0; i < Mathf.Clamp(colliders.Length, 0, maxSuspects); i++)
             {
                 colliders[i].SendMessage("JudgeMode");
                 suspects.Add(colliders[i].gameObject);
@@ -50,7 +51,7 @@ public class PoliceManBehavior : PlayerBehavior {
             animator.Play("busted");
             stateUpdate = ChooseSuspect;
 
-            GameManager.Instance.OpenEndScreen(suspects);
+            GameManager.Instance.OpenEndScreen(suspects, this);
 
         }
         else

@@ -74,9 +74,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void OpenEndScreen(List<GameObject> suspects)
+    public void OpenEndScreen(List<GameObject> suspects, PoliceManBehavior police)
     {
-        blackscreen.Open(suspects);
+        blackscreen.Open(suspects, police);
     }
 
 }
