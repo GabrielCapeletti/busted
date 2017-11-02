@@ -33,14 +33,7 @@ public class Spot : MonoBehaviour {
             this.groupId = -1;
         }
     }
-
-    public void Occupy(CharacterAI character) {
-        this.isFree = false;
-        this.lastOccupiedBy = character;
-    }
-
     
-
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(this.transform.position,0.2f);

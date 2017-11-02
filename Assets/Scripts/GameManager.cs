@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour {
             {
                 character.GetComponent<CharacterAI>().SetCurrentSpot(spot);
                 character.SendMessage("MoveTo", spot.transform.position);
-
             }
             index++;
         }
@@ -64,7 +63,6 @@ public class GameManager : MonoBehaviour {
     private void SaveSlots()
     {
         this.positionSlots = new List<Vector3>();
-
         int index = 0;
 
         while (index < this.slotContainer.childCount)
