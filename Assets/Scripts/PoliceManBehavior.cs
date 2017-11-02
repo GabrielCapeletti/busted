@@ -5,6 +5,7 @@ using UnityEngine;
 public class PoliceManBehavior : PlayerBehavior {
 
     private BoxCollider2D boxCollider;
+    private bool stopWalking = false;
 
     protected override void Start()
     {
@@ -13,11 +14,15 @@ public class PoliceManBehavior : PlayerBehavior {
 
     protected override void Update()
     {
-        base.Update();
+        if (stopWalking)
+        {
+            base.Update();
+        }
 
         if (Input.GetButtonDown("Action"))
         {
             stateUpdate = OnTalkEnter;
+            stopWalking = true;
         }
 
     }
@@ -33,15 +38,15 @@ public class PoliceManBehavior : PlayerBehavior {
         {
             flipDir = -1;
         }
-        
 
         if (colliders.Length > 0)
         {
+            int maxSuspects = 3;
             spriteRenderer.sortingLayerName = "Front";
 
             List<GameObject> suspects = new List<GameObject>();
 
-            for (int i = 0; i < colliders.Length; i++)
+            for (int i = 0; i < Mathf.Clamp(colliders.Length, 0, maxSuspects); i++)
             {
                 colliders[i].SendMessage("JudgeMode");
                 suspects.Add(colliders[i].gameObject);
@@ -50,7 +55,7 @@ public class PoliceManBehavior : PlayerBehavior {
             animator.Play("busted");
             stateUpdate = ChooseSuspect;
 
-            GameManager.Instance.OpenEndScreen(suspects);
+            GameManager.Instance.OpenEndScreen(suspects, this);
 
         }
         else
