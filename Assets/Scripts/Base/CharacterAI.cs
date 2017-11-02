@@ -165,6 +165,15 @@ public class CharacterAI : BaseCharacter {
     }
 
     protected override void Update() {
-        this.stateUpdate.Invoke();
+        if(this.stateUpdate != null)
+            this.stateUpdate.Invoke();
+    }
+
+    public void JudgeMode()
+    {
+        this.animator.Play("handsUp");
+        spriteRenderer.sortingLayerName = "Front";
+
+        this.stateUpdate = null;
     }
 }
