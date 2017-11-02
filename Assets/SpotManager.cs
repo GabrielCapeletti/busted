@@ -26,12 +26,18 @@ public class SpotManager : MonoBehaviour {
     private List<Spot> groupList = new List<Spot>();
     private List<Spot> singleList= new List<Spot>();
     private int recursiveCounter = 0;
+    private Dictionary<int, List<Spot>> groupMap = new Dictionary<int, List<Spot>>();
 
     void Start () {
-        this.spots = this.GetComponents<Spot>();
+        this.spots = this.GetComponentsInChildren<Spot>();
 
         foreach (Spot spot in this.spots) {
             if (spot.IsGroup) {
+                if (!this.groupMap.ContainsKey(spot.GroupId))
+                    this.groupMap[spot.GroupId] = new List<Spot>();
+
+                this.groupMap[spot.GroupId].Add(spot);
+
                 this.groupList.Add(spot);
             } else {
                 this.singleList.Add(spot);
@@ -67,6 +73,15 @@ public class SpotManager : MonoBehaviour {
         } else {
             return this.GetSpotFromList(this.singleList);
         }
+    }
+
+    public bool hasSomeoneOnGroup(Spot exception) {
+        foreach (Spot spot in this.groupMap[exception.GroupId]) {
+            if (exception.gameObject != spot && !spot.IsFree)
+                return true;
+        }
+
+        return false;
     }
 	
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterAI : BaseCharacter {
 
-    private const float TOLERANCE = 1f;
+    private const float TOLERANCE = 0.1f;
 
     [SerializeField]
     private float speed;
@@ -14,11 +14,11 @@ public class CharacterAI : BaseCharacter {
     private float stateTime = 1;
     private float duration = 0;
     private float cumulativeTime = 0;
-
     private Action stateUpdate;
     private Vector2 startPosition;
     private Vector2 targetPosition;
-    
+    private Spot currentSpot;
+
     protected override void Start() {
         base.Start();
         this.stateUpdate = this.OnIdle;
@@ -29,7 +29,7 @@ public class CharacterAI : BaseCharacter {
         //pLAY ANIMATION
         Debug.Log("Idle");
         this.animator.Play("idle");
-        this.timer = 0;
+        this.stateTime = 1;
         this.stateUpdate = this.OnIdle;
     }
 
@@ -41,18 +41,57 @@ public class CharacterAI : BaseCharacter {
     }
     #endregion
 
+    #region DANCING
+    private void OnDanceEnter() {
+        //pLAY ANIMATION
+        Debug.Log("Dance");
+        this.animator.Play("jump");
+        this.stateTime = 2;
+        this.stateUpdate = this.OnDance;
+    }
+
+    private void OnDance() {
+        this.timer += Time.deltaTime;
+        if (this.timer > this.stateTime) {
+            this.EndState();
+        }
+    }
+    #endregion
+
+    #region TALK
+    private void OnTalkEnter() {
+        //pLAY ANIMATION
+        Debug.Log("Talk");
+        this.animator.Play("idle");
+        this.stateTime = 1;
+        this.stateUpdate = this.OnTalk;
+    }
+
+    private void OnTalk() {
+        this.timer += Time.deltaTime;
+        if (this.timer > this.stateTime) {
+            this.EndState();
+        }
+    }
+    #endregion
+
     #region MOVE
     private void OnMoveEnter() {
         Debug.Log("OnMoveEnter");
+        Spot oldSpot = this.currentSpot;
+        this.currentSpot = SpotManager.Instance.FindNextPosition();
 
-        Spot nextSpot = SpotManager.Instance.FindNextPosition();
-        if (nextSpot == null) {
+        if (oldSpot != null)
+            oldSpot.IsFree = true;
+
+        if (this.currentSpot == null) {
             this.EndState();
             return;
         }
 
+        this.currentSpot.IsFree = false;
         this.animator.Play("run");
-        this.targetPosition = nextSpot.transform.position;
+        this.targetPosition = this.currentSpot.transform.position;
         this.spriteRenderer.flipX = this.targetPosition.x > this.transform.position.x;
         this.startPosition = this.transform.position;
         this.duration = Vector2.Distance(this.targetPosition, this.transform.position)/ this.speed;
@@ -77,15 +116,42 @@ public class CharacterAI : BaseCharacter {
 
     private void EndState() {
         Debug.Log("End State");
-
+        this.timer = 0;
         this.cumulativeTime = 0;
         float rnd = UnityEngine.Random.Range(0f, 1f);
-        if (rnd < 0.5f) {
+        if (rnd < 0.1f) {
             this.stateUpdate = this.OnMoveEnter;
+        } 
+        else 
+        {
+            rnd = UnityEngine.Random.Range(0f,1f);
+
+            if (this.currentSpot != null && this.currentSpot.GroupId >= 0 && SpotManager.Instance.hasSomeoneOnGroup(this.currentSpot)) {
+                this.ChooseActionOnNonEmptyGroup();
+            } else 
+            {
+                if (rnd < 0.51f) {
+                    this.stateUpdate = this.OnDanceEnter;
+                }
+                else {
+                    this.stateUpdate = this.OnIdleEnter;
+                }
+            }
+        }
+    }
+
+    private void ChooseActionOnNonEmptyGroup() {
+        float rnd = UnityEngine.Random.Range(0f, 1f);
+        if (rnd < 0.5f) {
+            this.stateUpdate = this.OnTalkEnter;
+        } else if (rnd < 0.85f) {
+            this.stateUpdate = this.OnDanceEnter;
         } else {
             this.stateUpdate = this.OnIdleEnter;
         }
     }
+
+    
 
     protected override void Update() {
         this.stateUpdate.Invoke();

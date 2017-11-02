@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Spot : MonoBehaviour {
 
+    [SerializeField]
+    private int groupId;
+    public int GroupId {
+        get { return this.groupId; }
+    }
 
     [SerializeField]
     private bool isGroup;
@@ -11,13 +16,20 @@ public class Spot : MonoBehaviour {
         get { return this.isGroup; }
     }
 
-
-    private bool isFree;
+    private bool isFree = true;
     public bool IsFree {
         get { return this.isFree; }
+        set { this.isFree = value; }
     }
 
-    void OnGUI() {
-        
+    void Start() {
+        if (!this.isGroup) {
+            this.groupId = -1;
+        }
+    }
+
+    void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(this.transform.position,0.2f);
     }
 }
