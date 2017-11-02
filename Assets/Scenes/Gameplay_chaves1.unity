@@ -118,8 +118,9 @@ GameObject:
   - component: {fileID: 25650819}
   - component: {fileID: 25650821}
   - component: {fileID: 25650820}
+  - component: {fileID: 25650822}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,12 +132,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25650818}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.141, z: -2.42}
-  m_LocalScale: {x: 0.02, y: 0.02, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.4100001}
+  m_LocalScale: {x: 0.033333328, y: 0.15384616, z: 1}
   m_Children: []
-  m_Father: {fileID: 384269766}
-  m_RootOrder: 3
+  m_Father: {fileID: 409567528}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &25650820
 Animator:
@@ -197,6 +198,98 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!114 &25650822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 25650818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a6733ae5f7bad46a62e604fc32d268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tag: 
+  Id: 0
+  PlayOnStart: 0
+  PlayOnEnable: 1
+  Duration: 0.4
+  Speed: 0
+  Delay: 0
+  Loop: 2
+  LoopsNumber: 0
+  EasingReference: 0
+  EaseEquation: 0
+  Curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  FlipCurveOnReverse: 1
+  Position:
+    From: {x: 0, y: 0, z: 0}
+    To: {x: 0, y: 0.2, z: 0}
+    IsLocal: 1
+    IsRelative: 0
+    IgnoreAxis:
+      X: 1
+      Y: 0
+      Z: 1
+  Rotation:
+    From: {x: 0, y: 0, z: 0}
+    To: {x: 0, y: 0, z: 0}
+    IsLocal: 0
+    IsRelative: 0
+    IgnoreAxis:
+      X: 0
+      Y: 0
+      Z: 0
+  Scale:
+    From: {x: 0, y: 0, z: 0}
+    To: {x: 0, y: 0, z: 0}
+    IsLocal: 0
+    IsRelative: 0
+    IgnoreAxis:
+      X: 0
+      Y: 0
+      Z: 0
+  Color:
+    From: {r: 0, g: 0, b: 0, a: 0}
+    To: {r: 0, g: 0, b: 0, a: 0}
+  Alpha:
+    From: 0
+    To: 0
+    Value: 0
+  Float:
+    From: 0
+    To: 0
+    Value: 0
+  _isPlaying: 0
+  _isReversing: 0
+  _isPaused: 0
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PotaTween+PotaTweenEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  _onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PotaTween+PotaTweenEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &25847979
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +569,7 @@ Transform:
   m_LocalScale: {x: 0.6, y: 0.13, z: 1}
   m_Children: []
   m_Father: {fileID: 384269766}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &125311799
 SpriteRenderer:
@@ -621,7 +714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &384269765
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -676,8 +769,8 @@ Transform:
   m_Children:
   - {fileID: 1742766405}
   - {fileID: 1603198646}
+  - {fileID: 409567528}
   - {fileID: 125311798}
-  - {fileID: 25650819}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -787,7 +880,7 @@ MonoBehaviour:
   dectectivePointLeft: {fileID: 1742766405}
   dectectivePointRight: {fileID: 1603198646}
   shadow: {fileID: 125311798}
-  arrow: {fileID: 25650819}
+  arrow: {fileID: 409567528}
 --- !u!1 &404687549
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +923,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupId: 3
   isGroup: 1
+--- !u!1 &409567527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 409567528}
+  m_Layer: 0
+  m_Name: Arrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &409567528
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 409567527}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.134, z: -2.01}
+  m_LocalScale: {x: 0.6, y: 0.13, z: 1}
+  m_Children:
+  - {fileID: 25650819}
+  m_Father: {fileID: 384269766}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &547735750
 GameObject:
   m_ObjectHideFlags: 0
