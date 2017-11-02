@@ -787,6 +787,7 @@ MonoBehaviour:
   dectectivePointLeft: {fileID: 1742766405}
   dectectivePointRight: {fileID: 1603198646}
   shadow: {fileID: 125311798}
+  arrow: {fileID: 25650819}
 --- !u!1 &404687549
 GameObject:
   m_ObjectHideFlags: 0

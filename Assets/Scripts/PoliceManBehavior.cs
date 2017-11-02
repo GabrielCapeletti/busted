@@ -14,7 +14,7 @@ public class PoliceManBehavior : PlayerBehavior {
 
     protected override void Update()
     {
-        if (stopWalking)
+        if (!stopWalking)
         {
             base.Update();
         }
@@ -22,7 +22,6 @@ public class PoliceManBehavior : PlayerBehavior {
         if (Input.GetButtonDown("Action"))
         {
             stateUpdate = OnTalkEnter;
-            stopWalking = true;
         }
 
     }
@@ -41,6 +40,8 @@ public class PoliceManBehavior : PlayerBehavior {
 
         if (colliders.Length > 0)
         {
+
+            stopWalking = true;
             int maxSuspects = 3;
             spriteRenderer.sortingLayerName = "Front";
 
