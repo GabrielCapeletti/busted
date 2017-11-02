@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : MonoBehaviour {
 
@@ -23,13 +24,50 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     [SerializeField]
-    private PolygonCollider2D walkAreaCollider;
-    public PolygonCollider2D WalkAreaCollider {
-        get { return this.walkAreaCollider; }
-        set { this.walkAreaCollider = value; }
+    private Transform slotContainer;
+
+    [SerializeField]
+    private GameObject characterModel;
+
+    [SerializeField]
+    private int totalOfCharacters;
+
+    private List<Vector3> positionSlots;
+
+    private void Start()
+    {
+        SaveSlots();
+        SetupCharacters();
     }
 
+    private void SetupCharacters()
+    {
+        totalOfCharacters = Mathf.Clamp(totalOfCharacters, 0, positionSlots.Count - 1);
 
+        int index = 0;
 
+        while (index < totalOfCharacters)
+        {
+            GameObject character = GameObject.Instantiate(characterModel);
+            character.SendMessage("MoveTo", positionSlots[index]);
+            index++;
+        }
+
+    }
+
+    private void SaveSlots()
+    {
+        positionSlots = new List<Vector3>();
+
+        int index = 0;
+
+        while (index < slotContainer.childCount)
+        {
+            positionSlots.Add(slotContainer.GetChild(index).position);
+            index++;
+        }
+
+        positionSlots = positionSlots.OrderBy(x => Random.value).ToList();
+    }
 
 }

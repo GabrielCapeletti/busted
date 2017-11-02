@@ -8,36 +8,42 @@ public class BaseCharacter : MonoBehaviour {
     [SerializeField]
     private float scaleDifference;
 
+    [SerializeField]
+    private float depth = 4;
+
     protected SpriteRenderer spriteRenderer;
     protected Animator animator;
-    protected PolygonCollider2D walkArea;
     private float maxHeight;
     private float initialScale;
 
-    protected virtual void Start() {
-	    this.spriteRenderer = this.GetComponent<SpriteRenderer>();
-	    this.animator = this.GetComponent<Animator>();
-        this.walkArea = GameManager.Instance.WalkAreaCollider;
-        this.maxHeight = (this.walkArea.bounds.max.y - this.walkArea.bounds.min.y);
+    private Camera mainCamera;
+
+
+    protected virtual void Awake()
+    {
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+        this.animator = this.GetComponent<Animator>();
+        this.mainCamera = Camera.main;
         this.initialScale = this.transform.localScale.x;
-        //new Vector2(bounds.min.x + (xPox * (bounds.max.x - bounds.min.x)),);
+        this.maxHeight = Camera.main.ScreenToWorldPoint(Vector3.up * Camera.main.pixelHeight).y;
+    }
+
+    protected virtual void Start() {
     }
 
     protected void MoveTo(Vector3 position) {
-        float height = this.walkArea.bounds.max.y - position.y;
+        float height = (this.mainCamera.transform.position.y + this.maxHeight * 0.5f) - position.y;
         float scale = height / this.maxHeight;
-        this.spriteRenderer.sortingOrder = (int)(scale * 100);
 
+        this.spriteRenderer.sortingOrder = (int)(scale * 100);
         scale *= this.scaleDifference;
         scale += this.initialScale;
         
         this.transform.localScale = new Vector2(scale,scale);
-
         this.transform.position = position;
-
     }
 
     protected virtual void Update () {
-		//
+
 	}
 }
