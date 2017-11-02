@@ -66,16 +66,19 @@ public class CharacterAI : BaseCharacter {
         }
     }
     #endregion
-
     
     #region TALK
     private void OnTalkEnter() {
+        this.spriteRenderer.flipX = this.closeChar.transform.position.x < this.transform.position.x;
+        this.closeChar.spriteRenderer.flipX = !this.spriteRenderer.flipX;
+
         if (this.dealer && !this.closeChar.drugged) {
             this.closeChar.OnDruggedEnter();
             this.animator.Play("deal");
             this.stateTime = 2.34f;
             this.stateUpdate = this.OnTalk;
         } else {
+            Debug.Log("Talk");
             this.closeChar.GoListening();
             this.animator.Play("talk");
             this.stateTime = 2.15f;
@@ -124,7 +127,12 @@ public class CharacterAI : BaseCharacter {
         this.MoveTo(Vector3.Lerp(this.startPosition,this.targetPosition,this.cumulativeTime * this.speed/this.duration));
 
         if (Vector2.Distance(this.targetPosition, this.transform.position) <= TOLERANCE) {
-            this.EndState();
+            if (this.drugged) {
+                this.animator.Play("drugged");
+                this.stateUpdate = null;
+            } else {
+                this.EndState();
+            }
         }
     }
     #endregion
@@ -166,9 +174,8 @@ public class CharacterAI : BaseCharacter {
     }
 
     public void OnDruggedEnter() {
-        this.animator.Play("drugged");
         this.drugged = true;
-        this.stateUpdate = null;
+        this.GetComponent<Collider2D>().enabled = false;
     }
 
     public void GoListening() {
@@ -176,6 +183,7 @@ public class CharacterAI : BaseCharacter {
             return;
         }
 
+        //this.
         this.animator.Play("talk");
         this.stateUpdate = null;
     }

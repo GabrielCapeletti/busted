@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleDifference: 0.42
+  dealer: 0
   speed: 1.5
 --- !u!212 &212435859622797718
 SpriteRenderer:

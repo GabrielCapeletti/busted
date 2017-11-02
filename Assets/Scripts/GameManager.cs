@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour {
         while (index < this.totalOfCharacters)
         {
             GameObject character = Instantiate(this.characterModel);
+            character.name += "" + index;
             Spot spot = SpotManager.Instance.FindNextPosition();
             if(spot != null)
             {
