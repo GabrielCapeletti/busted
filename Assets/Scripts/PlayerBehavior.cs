@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPoliceBehavior : BaseCharacter {
+public class PlayerBehavior : BaseCharacter {
 
     [SerializeField]
     private float speed = 2;
@@ -16,13 +16,15 @@ public class PlayerPoliceBehavior : BaseCharacter {
 
     protected override void Start()
     {
-        this.manager = GameManager.Instance;
         base.Start();
+        this.manager = GameManager.Instance;
+        this.stateUpdate = this.OnIdleEnter;
     }
 
     private void OnWaitAnim() {
         if (direction.magnitude > 0) {
             this.stateUpdate = this.OnMoveEnter;
+            return;
         }
 
         this.timer += Time.deltaTime;
@@ -35,18 +37,19 @@ public class PlayerPoliceBehavior : BaseCharacter {
         this.animator.Play("idle");
         this.stateUpdate = this.OnWaitAnim;
     }
+
     private void OnDanceEnter() {
-        this.animator.Play("jump");
+        this.animator.Play("dance");
         this.stateTime = 1;
         this.stateUpdate = this.OnWaitAnim;
     }
+
     private void OnTalkEnter() {
         this.animator.Play("idle");
         this.stateTime = 1;
         this.stateUpdate = this.OnWaitAnim;
     }
     
-
     #region MOVE
     private void OnMoveEnter() {
         this.animator.Play("run");
@@ -60,6 +63,7 @@ public class PlayerPoliceBehavior : BaseCharacter {
         }
 
         Vector3 nextPos = this.transform.position + (direction * this.speed * Time.deltaTime);
+        this.spriteRenderer.flipX = nextPos.x < this.transform.position.x;
         if (Physics2D.OverlapCircle(nextPos,0.1f) == null) {
             this.MoveTo(nextPos);
         }

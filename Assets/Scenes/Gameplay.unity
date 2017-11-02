@@ -1484,6 +1484,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupId: 0
   isGroup: 0
+--- !u!1001 &1323099139
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4230446482268514, guid: 060b17153255eaa4dabfd0471ba192fd, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230446482268514, guid: 060b17153255eaa4dabfd0471ba192fd, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230446482268514, guid: 060b17153255eaa4dabfd0471ba192fd, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230446482268514, guid: 060b17153255eaa4dabfd0471ba192fd, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230446482268514, guid: 060b17153255eaa4dabfd0471ba192fd, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230446482268514, guid: 060b17153255eaa4dabfd0471ba192fd, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230446482268514, guid: 060b17153255eaa4dabfd0471ba192fd, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230446482268514, guid: 060b17153255eaa4dabfd0471ba192fd, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 060b17153255eaa4dabfd0471ba192fd, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1342844450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2043,7 +2085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1968425988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2056,7 +2098,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleDifference: 0.74
-  depth: 4
   speed: 2
 --- !u!95 &1968425989
 Animator:
@@ -2114,7 +2155,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

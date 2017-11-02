@@ -50,8 +50,12 @@ public class GameManager : MonoBehaviour {
         {
             GameObject character = Instantiate(this.characterModel);
             Spot spot = SpotManager.Instance.FindNextPosition();
-            character.GetComponent<CharacterAI>().SetCurrentSpot(spot);
-            character.SendMessage("MoveTo", spot.transform.position);
+            if(spot != null)
+            {
+                character.GetComponent<CharacterAI>().SetCurrentSpot(spot);
+                character.SendMessage("MoveTo", spot.transform.position);
+
+            }
             index++;
         }
 
