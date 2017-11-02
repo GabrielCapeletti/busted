@@ -147,6 +147,12 @@ public class CharacterAI : BaseCharacter {
         }
     }
 
+    public void OnDruggedEnter() {
+        this.animator.Play("drugged");
+        this.currentSpot.IsFree = true;
+        this.stateUpdate = null;
+    }
+
     private void ChooseActionOnNonEmptyGroup() {
         float rnd = UnityEngine.Random.Range(0f, 1f);
         if (rnd < 0.5f) {
