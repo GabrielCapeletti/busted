@@ -163,7 +163,9 @@ public class CharacterAI : BaseCharacter {
         {
             rnd = UnityEngine.Random.Range(0f,1f);
 
-            if (this.currentSpot != null && this.currentSpot.GroupId >= 0 && SpotManager.Instance.hasSomeoneOnGroup(this.currentSpot)) {
+            CharacterAI closeChar = SpotManager.Instance.GetSomeoneOnGroup(this.currentSpot);
+
+            if (this.currentSpot != null && this.currentSpot.GroupId >= 0 && closeChar != null) {
                 this.ChooseActionOnNonEmptyGroup();
             } else {
                 if (rnd < 0.51f) {
