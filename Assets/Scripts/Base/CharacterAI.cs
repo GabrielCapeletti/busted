@@ -23,7 +23,8 @@ public class CharacterAI : BaseCharacter {
     private Spot currentSpot;
     private Spot oldSpot;
     private bool drugged = false;
-    
+    private CharacterAI closeChar;
+
     protected override void Start() {
         base.Start();
         this.stateUpdate = this.OnMoveEnter;
@@ -31,13 +32,11 @@ public class CharacterAI : BaseCharacter {
 
     public void SetCurrentSpot(Spot spot) {
         this.currentSpot = spot;
-        spot.IsFree = false;
+        spot.Occupy(this);
     }
 
     #region IDLE
     private void OnIdleEnter() {
-        //pLAY ANIMATION
-        //Debug.Log("Idle");
         this.animator.Play("idle");
         this.stateTime = 1;
         this.stateUpdate = this.OnIdle;
@@ -68,39 +67,26 @@ public class CharacterAI : BaseCharacter {
     }
     #endregion
 
+    
     #region TALK
     private void OnTalkEnter() {
-        if (this.dealer) {
-            this.TrySellingDrugs();
+        if (this.dealer && !this.closeChar.drugged) {
+            this.closeChar.OnDruggedEnter();
             this.animator.Play("deal");
             this.stateTime = 2.34f;
             this.stateUpdate = this.OnTalk;
-
         } else {
+            this.closeChar.GoListening();
             this.animator.Play("talk");
             this.stateTime = 2.15f;
             this.stateUpdate = this.OnTalk;
-        }
-   }
-
-    private void TrySellingDrugs() {
-
-        Debug.Log("Try selling");
-        int layer = 1 << LayerMask.NameToLayer("Suspects");
-
-        Collider2D[] closeCharacters = Physics2D.OverlapCircleAll(this.transform.position, 2f, layer);
-        foreach (Collider2D collider in closeCharacters) {
-            CharacterAI character = collider.GetComponent<CharacterAI>();
-            if(!character.Equals(this))
-                if (!character.drugged) {
-                    character.stateUpdate = character.OnDruggedEnter;
-                }
         }
     }
 
     private void OnTalk() {
         this.timer += Time.deltaTime;
         if (this.timer > this.stateTime) {
+            this.closeChar.FinishListening();
             this.EndState();
         }
     }
@@ -122,7 +108,7 @@ public class CharacterAI : BaseCharacter {
         if (this.oldSpot != null)
             this.oldSpot.IsFree = true;
 
-        this.currentSpot.IsFree = false;
+        this.currentSpot.Occupy(this);
         this.animator.Play("run");
         this.targetPosition = this.currentSpot.transform.position;
         this.spriteRenderer.flipX = this.targetPosition.x < this.transform.position.x;
@@ -132,13 +118,9 @@ public class CharacterAI : BaseCharacter {
     }
 
     private void OnMove() {
-        //Debug.Log("OnMove");
-        
-        //float newPosX = Ease.Linear(this.cumulativeTime, this.startPosition.x, this.targetPosition.x, this.duration);
-        //float newPosY = Ease.Linear(this.cumulativeTime,this.startPosition.y,this.targetPosition.y,this.duration);
+       
         this.cumulativeTime += Time.deltaTime;
 
-        //this.transform.position = new Vector2(newPosX,newPosY);
         this.MoveTo(Vector3.Lerp(this.startPosition,this.targetPosition,this.cumulativeTime * this.speed/this.duration));
 
         if (Vector2.Distance(this.targetPosition, this.transform.position) <= TOLERANCE) {
@@ -162,13 +144,15 @@ public class CharacterAI : BaseCharacter {
         else 
         {
             rnd = UnityEngine.Random.Range(0f,1f);
+            this.closeChar = null;
+            
+            int layer = 1 << LayerMask.NameToLayer("Suspects");
+            Collider2D coll = Physics2D.OverlapCircle(this.transform.position,0.2f,layer);
 
-            CharacterAI closeChar = null;
-            if (this.currentSpot.GroupId >= 0) {
-                closeChar = SpotManager.Instance.GetSomeoneOnGroup(this.currentSpot);
-            }
+            if(coll != null)
+                this.closeChar = coll.GetComponent<CharacterAI>();
 
-            if (this.currentSpot != null && closeChar != null) {
+            if (this.currentSpot != null && this.closeChar != null) {
                 this.ChooseActionOnNonEmptyGroup();
             } else {
                 if (rnd < 0.51f) {
@@ -185,6 +169,23 @@ public class CharacterAI : BaseCharacter {
         this.animator.Play("drugged");
         this.drugged = true;
         this.stateUpdate = null;
+    }
+
+    public void GoListening() {
+        if (this.drugged) {
+            return;
+        }
+
+        this.animator.Play("talk");
+        this.stateUpdate = null;
+    }
+
+    public void FinishListening() {
+        if (this.drugged) {
+            return;
+        }
+
+        this.EndState();
     }
 
     private void ChooseActionOnNonEmptyGroup() {

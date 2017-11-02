@@ -28,6 +28,11 @@ public class Spot : MonoBehaviour {
         set { this.lastOccupiedBy = value; }
     }
 
+    public void Occupy(CharacterAI character) {
+        this.lastOccupiedBy = character;
+        this.isFree = false;
+    }
+
     void Start() {
         if (!this.isGroup) {
             this.groupId = -1;
