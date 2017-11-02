@@ -163,9 +163,12 @@ public class CharacterAI : BaseCharacter {
         {
             rnd = UnityEngine.Random.Range(0f,1f);
 
-            CharacterAI closeChar = SpotManager.Instance.GetSomeoneOnGroup(this.currentSpot);
+            CharacterAI closeChar = null;
+            if (this.currentSpot.GroupId >= 0) {
+                closeChar = SpotManager.Instance.GetSomeoneOnGroup(this.currentSpot);
+            }
 
-            if (this.currentSpot != null && this.currentSpot.GroupId >= 0 && closeChar != null) {
+            if (this.currentSpot != null && closeChar != null) {
                 this.ChooseActionOnNonEmptyGroup();
             } else {
                 if (rnd < 0.51f) {
@@ -208,7 +211,7 @@ public class CharacterAI : BaseCharacter {
     public void JudgeMode()
     {
         this.animator.Play("handsUp");
-        spriteRenderer.sortingLayerName = "Front";
+        this.spriteRenderer.sortingLayerName = "Front";
 
         this.stateUpdate = null;
     }

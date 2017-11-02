@@ -72,7 +72,7 @@ public class SpotManager : MonoBehaviour {
         }
     }
 
-    public CharacterAI hasSomeoneOnGroup(Spot exception) {
+    public CharacterAI GetSomeoneOnGroup(Spot exception) {
         foreach (Spot spot in this.groupMap[exception.GroupId]) {
             if (exception.gameObject != spot && !spot.IsFree)
                 return spot.LastOccupiedBy;
