@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
-    public GameObject blackscreen;
+    public EndScreen blackscreen;
 
     [SerializeField]
     private Transform slotContainer;
@@ -72,6 +72,11 @@ public class GameManager : MonoBehaviour {
             this.positionSlots.Add(this.slotContainer.GetChild(index).position);
             index++;
         }
+    }
+
+    public void OpenEndScreen(List<GameObject> suspects)
+    {
+        blackscreen.Open(suspects);
     }
 
 }

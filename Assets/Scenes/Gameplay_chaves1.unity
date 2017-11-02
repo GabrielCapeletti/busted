@@ -454,6 +454,7 @@ GameObject:
   - component: {fileID: 384269766}
   - component: {fileID: 384269765}
   - component: {fileID: 384269767}
+  - component: {fileID: 384269768}
   m_Layer: 0
   m_Name: Blackscreen
   m_TagString: Untagged
@@ -512,7 +513,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.35462004, y: -0.24258396, z: 0.3}
   m_LocalScale: {x: 20, y: 12, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1742766405}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -608,6 +610,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: PotaTween+PotaTweenEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &384269768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 384269764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09e97cd120439e4792243bc3d100b99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &404687549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1692,7 +1705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b78303293019546b97f7b93a45be87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackscreen: {fileID: 384269764}
+  blackscreen: {fileID: 384269768}
   slotContainer: {fileID: 719840091}
   characterModel: {fileID: 1882544401858040, guid: 060b17153255eaa4dabfd0471ba192fd,
     type: 2}
@@ -2134,6 +2147,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupId: 0
   isGroup: 0
+--- !u!1 &1742766404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1742766405}
+  m_Layer: 0
+  m_Name: DetectivePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1742766405
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1742766404}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 384269766}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1885613368
 GameObject:
   m_ObjectHideFlags: 0
