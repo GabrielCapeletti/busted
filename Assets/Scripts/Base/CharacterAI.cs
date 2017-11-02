@@ -127,10 +127,7 @@ public class CharacterAI : BaseCharacter {
         this.MoveTo(Vector3.Lerp(this.startPosition,this.targetPosition,this.cumulativeTime * this.speed/this.duration));
 
         if (Vector2.Distance(this.targetPosition, this.transform.position) <= TOLERANCE) {
-            if (this.drugged) {
-                this.animator.Play("drugged");
-                this.stateUpdate = null;
-            } else {
+            if (!this.drugged) {
                 this.EndState();
             }
         }
@@ -175,6 +172,8 @@ public class CharacterAI : BaseCharacter {
 
     public void OnDruggedEnter() {
         this.drugged = true;
+        this.animator.Play("talk");
+        this.stateUpdate = null;
         this.GetComponent<Collider2D>().enabled = false;
     }
 
@@ -183,13 +182,13 @@ public class CharacterAI : BaseCharacter {
             return;
         }
 
-        //this.
         this.animator.Play("talk");
         this.stateUpdate = null;
     }
 
     public void FinishListening() {
         if (this.drugged) {
+            this.animator.Play("drugged");
             return;
         }
 
