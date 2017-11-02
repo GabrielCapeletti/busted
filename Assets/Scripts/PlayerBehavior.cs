@@ -10,7 +10,7 @@ public class PlayerBehavior : BaseCharacter {
 
     private Vector3 direction;
     private GameManager manager;
-    private Action stateUpdate;
+    protected Action stateUpdate;
     private float timer;
     private double stateTime;
 
@@ -45,7 +45,7 @@ public class PlayerBehavior : BaseCharacter {
         this.stateUpdate = this.OnWaitAnim;
     }
 
-    private void OnTalkEnter() {
+    protected virtual void OnTalkEnter() {
         this.animator.Play("idle");
         this.stateTime = 1;
         this.stateUpdate = this.OnWaitAnim;
