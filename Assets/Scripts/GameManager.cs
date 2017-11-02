@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
     private Transform slotContainer;
 
     [SerializeField]
-    private GameObject characterModel;
+    private GameObject[] characterModel;
 
     [SerializeField]
     private int totalOfCharacters;
@@ -47,15 +47,20 @@ public class GameManager : MonoBehaviour {
         this.totalOfCharacters = Mathf.Clamp(this.totalOfCharacters, 0, this.positionSlots.Count - 1);
 
         int index = 0;
+        int dealerIndex = Random.Range(0, this.characterModel.Length);
 
-        while (index < this.totalOfCharacters)
-        {
-            GameObject character = Instantiate(this.characterModel);
+        while (index < this.totalOfCharacters) {
+
+            int rand = Random.Range(0, this.characterModel.Length);
+            GameObject character = Instantiate(this.characterModel[rand]);
             character.name += "" + index;
             Spot spot = SpotManager.Instance.FindNextPosition();
-            if(spot != null)
-            {
-                character.GetComponent<CharacterAI>().SetCurrentSpot(spot);
+            if(spot != null) {
+                CharacterAI ia = character.GetComponent<CharacterAI>();
+                ia.SetCurrentSpot(spot);
+                if (dealerIndex == index) {
+                    ia.BecomeDealer();
+                }
                 character.SendMessage("MoveTo", spot.transform.position);
             }
             index++;

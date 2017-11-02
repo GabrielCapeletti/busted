@@ -30,6 +30,10 @@ public class CharacterAI : BaseCharacter {
         this.stateUpdate = this.OnMoveEnter;
     }
 
+    public void BecomeDealer() {
+        this.dealer = true;
+    }
+
     public void SetCurrentSpot(Spot spot) {
         this.currentSpot = spot;
         spot.Occupy(this);
