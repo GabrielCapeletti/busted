@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
         {
             GameObject character = GameObject.Instantiate(characterModel);
             Spot spot = SpotManager.Instance.FindNextPosition();
-            spot.IsFree = true;
+            character.GetComponent<CharacterAI>().SetCurrentSpot(spot);
             character.SendMessage("MoveTo", spot.transform.position);
             index++;
         }
@@ -68,8 +68,6 @@ public class GameManager : MonoBehaviour {
             positionSlots.Add(slotContainer.GetChild(index).position);
             index++;
         }
-
-        positionSlots = positionSlots.OrderBy(x => Random.value).ToList();
     }
 
 }
