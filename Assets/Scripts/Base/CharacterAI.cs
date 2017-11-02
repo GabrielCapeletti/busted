@@ -18,10 +18,16 @@ public class CharacterAI : BaseCharacter {
     private Vector2 startPosition;
     private Vector2 targetPosition;
     private Spot currentSpot;
+    private Spot oldSpot;
 
     protected override void Start() {
         base.Start();
         this.stateUpdate = this.OnMoveEnter;
+    }
+
+    public void SetCurrentSpot(Spot spot) {
+        this.currentSpot = spot;
+        spot.IsFree = false;
     }
 
     #region IDLE
@@ -77,16 +83,19 @@ public class CharacterAI : BaseCharacter {
 
     #region MOVE
     private void OnMoveEnter() {
-        Spot oldSpot = this.currentSpot;
+        Debug.Log("OnMoveEnter");
+
+        this.oldSpot = this.currentSpot;
         this.currentSpot = SpotManager.Instance.FindNextPosition();
-
-        if (oldSpot != null)
-            oldSpot.IsFree = true;
-
+        
         if (this.currentSpot == null) {
             this.EndState();
+            this.currentSpot = this.oldSpot;
             return;
         }
+
+        if (this.oldSpot != null)
+            this.oldSpot.IsFree = true;
 
         this.currentSpot.IsFree = false;
         this.animator.Play("run");
@@ -117,7 +126,7 @@ public class CharacterAI : BaseCharacter {
         this.timer = 0;
         this.cumulativeTime = 0;
         float rnd = UnityEngine.Random.Range(0f, 1f);
-        if (rnd < 0.1f) {
+        if (rnd < 0.6f) {
             this.stateUpdate = this.OnMoveEnter;
         } 
         else 

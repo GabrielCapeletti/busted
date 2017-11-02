@@ -52,15 +52,14 @@ public class SpotManager : MonoBehaviour {
         int i = Random.Range(0, list.Count);
         if (list[i].IsFree) {
             return list[i];
+        }
+
+        this.recursiveCounter++;
+        if (this.recursiveCounter > 1000) {
+            this.recursiveCounter = 0;
+            return null;
         } else {
-            this.recursiveCounter++;
-            if (this.recursiveCounter > 100) {
-                this.recursiveCounter = 0;
-                return null;
-            }
-            else {
-                this.FindNextPosition();
-            }
+            this.FindNextPosition();
         }
 
         return null;
