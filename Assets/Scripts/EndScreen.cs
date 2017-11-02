@@ -8,10 +8,28 @@ public class EndScreen : MonoBehaviour {
     public Transform dectectivePointRight;
 
     public Transform shadow;
+    public Transform arrow;
+
+    private int currentSuspect = 0;
+    private bool changeArrow = false;
 
     void Start () {
 		
 	}
+
+    public void Update()
+    {
+        float axis = Input.GetAxisRaw("Horizontal");
+
+        if (Mathf.Abs(axis) > 0 && !changeArrow)
+        {
+
+            changeArrow = true;
+            return;
+        }
+
+        changeArrow = false;
+    }
 
     public void Open(List<GameObject> suspects, PoliceManBehavior police)
     {
@@ -24,7 +42,6 @@ public class EndScreen : MonoBehaviour {
         for (int i = 0; i < suspects.Count; i++)
         {
             float posX = 1f + (distanceX * i) - ((suspects.Count * distanceX) * 0.5f);
-
 
             PotaTween policeTween = PotaTween.Create(police.gameObject);
             policeTween.SetPosition(police.transform.position, dectectivePointRight.position);

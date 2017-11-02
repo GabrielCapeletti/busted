@@ -5,6 +5,7 @@ using UnityEngine;
 public class PoliceManBehavior : PlayerBehavior {
 
     private BoxCollider2D boxCollider;
+    private bool stopWalking = false;
 
     protected override void Start()
     {
@@ -13,11 +14,15 @@ public class PoliceManBehavior : PlayerBehavior {
 
     protected override void Update()
     {
-        base.Update();
+        if (stopWalking)
+        {
+            base.Update();
+        }
 
         if (Input.GetButtonDown("Action"))
         {
             stateUpdate = OnTalkEnter;
+            stopWalking = true;
         }
 
     }
@@ -33,7 +38,6 @@ public class PoliceManBehavior : PlayerBehavior {
         {
             flipDir = -1;
         }
-        
 
         if (colliders.Length > 0)
         {
