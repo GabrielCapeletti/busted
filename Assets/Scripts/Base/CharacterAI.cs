@@ -21,7 +21,7 @@ public class CharacterAI : BaseCharacter {
 
     protected override void Start() {
         base.Start();
-        this.stateUpdate = this.OnIdle;
+        this.stateUpdate = this.OnMoveEnter;
     }
 
     #region IDLE
@@ -77,7 +77,6 @@ public class CharacterAI : BaseCharacter {
 
     #region MOVE
     private void OnMoveEnter() {
-        Debug.Log("OnMoveEnter");
         Spot oldSpot = this.currentSpot;
         this.currentSpot = SpotManager.Instance.FindNextPosition();
 
@@ -115,7 +114,6 @@ public class CharacterAI : BaseCharacter {
     #endregion
 
     private void EndState() {
-        Debug.Log("End State");
         this.timer = 0;
         this.cumulativeTime = 0;
         float rnd = UnityEngine.Random.Range(0f, 1f);

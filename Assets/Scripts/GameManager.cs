@@ -49,7 +49,9 @@ public class GameManager : MonoBehaviour {
         while (index < totalOfCharacters)
         {
             GameObject character = GameObject.Instantiate(characterModel);
-            character.SendMessage("MoveTo", positionSlots[index]);
+            Spot spot = SpotManager.Instance.FindNextPosition();
+            spot.IsFree = true;
+            character.SendMessage("MoveTo", spot.transform.position);
             index++;
         }
 

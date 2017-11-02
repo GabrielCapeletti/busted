@@ -28,7 +28,7 @@ public class SpotManager : MonoBehaviour {
     private int recursiveCounter = 0;
     private Dictionary<int, List<Spot>> groupMap = new Dictionary<int, List<Spot>>();
 
-    void Start () {
+    void Awake () {
         this.spots = this.GetComponentsInChildren<Spot>();
 
         foreach (Spot spot in this.spots) {
