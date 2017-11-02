@@ -64,7 +64,10 @@ public class PlayerBehavior : BaseCharacter {
 
         Vector3 nextPos = this.transform.position + (direction * this.speed * Time.deltaTime);
         this.spriteRenderer.flipX = nextPos.x < this.transform.position.x;
-        if (Physics2D.OverlapCircle(nextPos,0.1f) == null) {
+
+        int layerMask = 1 << LayerMask.NameToLayer("Colliders");
+
+        if (Physics2D.OverlapCircle(nextPos,0.1f, layerMask) == null) {
             this.MoveTo(nextPos);
         }
     }
