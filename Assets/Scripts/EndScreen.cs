@@ -13,6 +13,8 @@ public class EndScreen : MonoBehaviour {
     private int currentSuspect = 0;
     private bool changeArrow = false;
 
+    private List<GameObject> suspects;
+
     void Start () {
 		
 	}
@@ -33,6 +35,9 @@ public class EndScreen : MonoBehaviour {
 
     public void Open(List<GameObject> suspects, PoliceManBehavior police)
     {
+        this.suspects = suspects;
+
+
         gameObject.SetActive(true);
 
         float distanceX = 2.2f;
@@ -53,6 +58,9 @@ public class EndScreen : MonoBehaviour {
 
             policeTween.SetDuration(0.5f);
 
+
+            PositionArrow(posX);
+
             PotaTween tween = PotaTween.Create(suspects[i].gameObject);
             tween.SetPosition(suspects[i].transform.position, new Vector3(posX, -2));
             tween.SetScale(suspects[i].transform.localScale, Vector3.one * 0.8f);
@@ -62,6 +70,10 @@ public class EndScreen : MonoBehaviour {
             policeTween.Play();
         }
 
+    }
 
+    private void PositionArrow(float posX)
+    {
+        arrow.transform.position = new Vector3(posX, 2.2f, 0);
     }
 }
