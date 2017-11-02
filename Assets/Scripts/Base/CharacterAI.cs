@@ -27,7 +27,7 @@ public class CharacterAI : BaseCharacter {
     #region IDLE
     private void OnIdleEnter() {
         //pLAY ANIMATION
-        Debug.Log("Idle");
+        //Debug.Log("Idle");
         this.animator.Play("idle");
         this.stateTime = 1;
         this.stateUpdate = this.OnIdle;
@@ -44,7 +44,7 @@ public class CharacterAI : BaseCharacter {
     #region DANCING
     private void OnDanceEnter() {
         //pLAY ANIMATION
-        Debug.Log("Dance");
+        //Debug.Log("Dance");
         this.animator.Play("jump");
         this.stateTime = 2;
         this.stateUpdate = this.OnDance;
@@ -61,7 +61,7 @@ public class CharacterAI : BaseCharacter {
     #region TALK
     private void OnTalkEnter() {
         //pLAY ANIMATION
-        Debug.Log("Talk");
+        //Debug.Log("Talk");
         this.animator.Play("idle");
         this.stateTime = 1;
         this.stateUpdate = this.OnTalk;
@@ -98,7 +98,7 @@ public class CharacterAI : BaseCharacter {
     }
 
     private void OnMove() {
-        Debug.Log("OnMove");
+        //Debug.Log("OnMove");
         
         //float newPosX = Ease.Linear(this.cumulativeTime, this.startPosition.x, this.targetPosition.x, this.duration);
         //float newPosY = Ease.Linear(this.cumulativeTime,this.startPosition.y,this.targetPosition.y,this.duration);

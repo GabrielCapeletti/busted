@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
         }
     }
     #endregion
-
+    
     [SerializeField]
     private Transform slotContainer;
 
