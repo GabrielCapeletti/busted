@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour {
     public EndScreen blackscreen;
     public PostProcessingProfile postProcessing;
     public GameObject tutorial;
+    public GameObject scoreScreen;
+    public GameObject player2;
 
     [SerializeField]
     private GameObject logo;
@@ -81,11 +83,13 @@ public class GameManager : MonoBehaviour {
                 character.SendMessage("MoveTo", spot.transform.position);
             }
 
-            this.characters.Add(character);
+            character.transform.parent = transform;
+
+            characters.Add(character);
 
             index++;
         }
-
+        characters = characters.OrderBy(x => Random.value).ToList();
     }
 
     private void SetPolice()
@@ -165,6 +169,7 @@ public class GameManager : MonoBehaviour {
         if (gameBegan && Input.GetButtonDown("Start2")) {
             Debug.Log("Start2");
             if (!this.hasPlayer2) {
+                player2.SetActive(true);
                 this.EnterPlayer2();
                 this.hasPlayer2 = true;
             }
@@ -190,6 +195,11 @@ public class GameManager : MonoBehaviour {
         {
             this.logoTween.Play(this.StartGame);
         }
+    }
+
+    public List<GameObject> GetCharacters()
+    {
+        return characters;
     }
 
     private void StartGame()

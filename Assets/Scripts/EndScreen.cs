@@ -10,6 +10,7 @@ public class EndScreen : MonoBehaviour {
 
     public Transform shadow;
     public Transform arrow;
+    public ScoreScreen scoreScreen;
 
     private int currentSuspect = 0;
     private bool changeArrow = false;
@@ -40,12 +41,16 @@ public class EndScreen : MonoBehaviour {
         if (Input.GetButtonDown("Action1")) {
             CharacterAI ia = this.suspects[this.selectedIndex].GetComponent<CharacterAI>();
             if (ia != null && ia.IsDealer()) {
-                Debug.Log("BUBUBUBUUUUUUUSTED");
-            } else if (ia == null) {
-                Debug.Log("BUBUBUBUUUUUUUSTED");
+            } else if (ia == null)
+            {
+                ScoreScreen.END_TEXT = "BOM TRABALHO! VOCÊ PRENDEU O CRIMINOSO.";
             } else {
-                Debug.Log("RACISTA FDP");
+
+                ScoreScreen.END_TEXT = "VOCÊ PRENDEU A PESSOAL ERRADA.";
             }
+
+            transform.parent.gameObject.SetActive(false);
+            scoreScreen.Open();
         }
 
         if (Mathf.Abs(axis) > 0 && !this.changeArrow) {
@@ -91,6 +96,9 @@ public class EndScreen : MonoBehaviour {
     }
 
     public void Open(List<GameObject> suspects, PoliceManBehavior police) {
+
+        GameManager.Instance.tutorial.SetActive(false);
+
         this.police = police;
         this.suspects = suspects;
         this.selectedIndex = 0;
