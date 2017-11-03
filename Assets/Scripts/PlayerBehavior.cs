@@ -74,7 +74,7 @@ public class PlayerBehavior : BaseCharacter {
     }
     #endregion
 
-    private void EndState() {
+    public void EndState() {
         this.timer = 0;
         float rnd = UnityEngine.Random.Range(0f, 1f);
         if (rnd < 0.51f) {

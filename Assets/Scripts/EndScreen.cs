@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EndScreen : MonoBehaviour {
@@ -14,58 +16,102 @@ public class EndScreen : MonoBehaviour {
     private bool changeArrow = false;
 
     private List<GameObject> suspects;
+    private int selectedIndex = 0;
+    private PotaTween alphaTweenIn;
+    private PotaTween alphaTweenOut;
+    private PoliceManBehavior police;
 
-    void Start () {
-		
-	}
+    void OnEnable() {
+        this.alphaTweenIn.Play();
+    }
+
+    void Awake () {
+        this.alphaTweenIn = PotaTween.Create(this.gameObject,0);
+        this.alphaTweenIn.SetAlpha(0f, 1f);
+
+        this.alphaTweenOut = PotaTween.Create(this.gameObject,1);
+        this.alphaTweenOut.SetAlpha(1f,0f);
+        this.alphaTweenOut.onComplete.AddListener(tween => ReactivateSuspects());
+    }
 
     public void Update()
     {
         float axis = Input.GetAxisRaw("Horizontal");
 
-        if (Mathf.Abs(axis) > 0 && !changeArrow)
-        {
-
-            changeArrow = true;
-            return;
+        if (Input.GetButtonDown("Action")) {
+            if (this.suspects[this.selectedIndex].GetComponent<CharacterAI>().IsDealer()) {
+                Debug.Log("BUBUBUBUUUUUUUSTED");
+            }else {
+                Debug.Log("RACISTA FDP");
+            }
         }
 
-        changeArrow = false;
+        if (Mathf.Abs(axis) > 0 && !this.changeArrow) {
+            this.selectedIndex = (axis > 0) ? (this.selectedIndex + 1) : (this.selectedIndex - 1);
+            this.selectedIndex = (this.selectedIndex >= 0) ? this.selectedIndex : this.suspects.Count - 1;
+            this.selectedIndex = this.selectedIndex % this.suspects.Count;
+            this.arrow.transform.position = new Vector3(this.suspects[this.selectedIndex].transform.position.x,this.arrow.transform.position.y,this.arrow.transform.position.z);
+            this.changeArrow = true;
+            
+        }else if (Math.Abs(axis) == 0) {
+            this.changeArrow = false;
+        }
+
     }
 
-    public void Open(List<GameObject> suspects, PoliceManBehavior police)
-    {
+    private void ReallocateArrow() {
+        this.arrow.transform.position = new Vector3(this.suspects[this.selectedIndex].transform.position.x,this.arrow.transform.position.y,this.arrow.transform.position.z);
+    }
+
+    private void ReactivateSuspects() {
+        for (int i = 0 ; i < this.suspects.Count ; i++) {
+            CharacterAI suspect = this.suspects[i].GetComponent<CharacterAI>();
+            suspect.spriteRenderer.sortingLayerName = "Default";
+            suspect.StartingMove();
+        }
+
+        this.police.spriteRenderer.sortingLayerName = "Default";
+        this.police.stopWalking = false;
+        this.police.EndState();
+
+        this.gameObject.SetActive(false);
+    }
+
+    public void Close() {
+        this.alphaTweenOut.Play();
+    }
+
+    public void Open(List<GameObject> suspects, PoliceManBehavior police) {
+        this.police = police;
         this.suspects = suspects;
-
-
-        gameObject.SetActive(true);
+        this.selectedIndex = 0;
+        this.gameObject.SetActive(true);
 
         float distanceX = 2.2f;
-        
-        shadow.localScale = new Vector3(0.3f, 0.1f) * (suspects.Count * 0.6F);
+
+        this.shadow.localScale = new Vector3(0.3f, 0.1f) * (suspects.Count * 0.6F);
 
         for (int i = 0; i < suspects.Count; i++)
         {
             float posX = 1f + (distanceX * i) - ((suspects.Count * distanceX) * 0.5f);
 
             PotaTween policeTween = PotaTween.Create(police.gameObject);
-            policeTween.SetPosition(police.transform.position, dectectivePointRight.position);
+            policeTween.SetPosition(police.transform.position, this.dectectivePointRight.position);
 
             if (!police.GetComponent<SpriteRenderer>().flipX)
             {
-                policeTween.SetPosition(police.transform.position, dectectivePointLeft.position);
+                policeTween.SetPosition(police.transform.position, this.dectectivePointLeft.position);
             }
 
             policeTween.SetDuration(0.5f);
-
-            PositionArrow(posX);
-            arrow.gameObject.SetActive(true);
+            policeTween.onComplete.AddListener(arg0 => this.ReallocateArrow());
+            this.PositionArrow(posX);
+            this.arrow.gameObject.SetActive(true);
 
             PotaTween tween = PotaTween.Create(suspects[i].gameObject);
             tween.SetPosition(suspects[i].transform.position, new Vector3(posX, -2));
             tween.SetScale(suspects[i].transform.localScale, Vector3.one * 0.8f);
             tween.SetDuration(0.5f);
-
             tween.Play();
             policeTween.Play();
         }
@@ -74,6 +120,6 @@ public class EndScreen : MonoBehaviour {
 
     private void PositionArrow(float posX)
     {
-        arrow.transform.position = new Vector3(posX, 2.2f, 0);
+        this.arrow.transform.position = new Vector3(posX, 2.2f, 0);
     }
 }
