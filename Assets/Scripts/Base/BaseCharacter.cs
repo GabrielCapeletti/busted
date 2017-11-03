@@ -32,12 +32,29 @@ public class BaseCharacter : MonoBehaviour {
         float height = (this.mainCamera.transform.position.y + this.maxHeight * 0.5f) - position.y;
         float scale = height / this.maxHeight;
 
+
+
         this.spriteRenderer.sortingOrder = (int)(scale * 100);
         scale *= this.scaleDifference;
         scale += this.initialScale;
         
         this.transform.localScale = new Vector2(scale,scale);
         this.transform.position = position;
+    }
+
+    public float GetScaleDifference()
+    {
+        return scaleDifference;
+    }
+
+    public void SetScaleDifference(float value)
+    {
+        scaleDifference = value;
+    }
+
+    public void SetInitialScale(float value)
+    {
+        initialScale = value;
     }
 
     protected virtual void Update () {

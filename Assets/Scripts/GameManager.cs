@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Rendering;
+using UnityEngine.PostProcessing;
 
 public class GameManager : MonoBehaviour {
 
@@ -24,6 +26,11 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     public EndScreen blackscreen;
+    public PostProcessingProfile postProcessing;
+    public GameObject tutorial;
+
+    [SerializeField]
+    private GameObject logo;
 
     [SerializeField]
     private Transform slotContainer;
@@ -35,6 +42,9 @@ public class GameManager : MonoBehaviour {
     private int totalOfCharacters;
 
     private List<Vector3> positionSlots;
+    private List<GameObject> characters;
+
+    private PotaTween logoTween;
 
     public bool gamePaused { get; set; }
 
@@ -42,10 +52,19 @@ public class GameManager : MonoBehaviour {
         this.gamePaused = false;
         this.SaveSlots();
         this.SetupCharacters();
+
+        logoTween = PotaTween.Create(logo);
+        logoTween.SetAlpha(1f, 0f);
+        logoTween.SetDuration(2f);
+
+        postProcessing.depthOfField.enabled = true;
+
     }
 
     private void SetupCharacters()
     {
+        characters = new List<GameObject>();
+
         this.totalOfCharacters = Mathf.Clamp(this.totalOfCharacters, 0, this.positionSlots.Count - 1);
 
         int index = 0;
@@ -57,17 +76,50 @@ public class GameManager : MonoBehaviour {
             GameObject character = Instantiate(this.characterModel[rand]);
             character.name += "" + index;
             Spot spot = SpotManager.Instance.FindNextPosition();
-            if(spot != null) {
-                CharacterAI ia = character.GetComponent<CharacterAI>();
-                ia.SetCurrentSpot(spot);
-                if (dealerIndex == index) {
-                    ia.BecomeDealer();
-                }
+
+            if (spot != null) {    
                 character.SendMessage("MoveTo", spot.transform.position);
             }
+
+            characters.Add(character);
+
             index++;
         }
 
+    }
+
+    private void SetPolice()
+    {
+        GameObject character = characters[0];
+
+        CharacterAI ai = character.GetComponent<CharacterAI>();
+        float scaleDiference = ai.GetScaleDifference();
+        GameObject.Destroy(character.GetComponent<CharacterAI>());
+        PoliceManBehavior police = character.AddComponent<PoliceManBehavior>();
+        police.SetScaleDifference(scaleDiference);
+        police.SetInitialScale(0.5f);
+        police.name = "Player";
+    }
+
+    private void SetDealer()
+    {
+        int index = 0;
+        int dealerIndex = Random.Range(1, this.characters.Count - 1);
+
+        while (index < this.totalOfCharacters)
+        {
+            GameObject character = this.characters[index];
+            CharacterAI ia = character.GetComponent<CharacterAI>();
+
+            if (dealerIndex == index)
+            {
+                ia.name = "Dealer";
+                ia.BecomeDealer();
+            }
+
+            index++;
+        }
+            
     }
 
     private void SaveSlots()
@@ -94,5 +146,20 @@ public class GameManager : MonoBehaviour {
                 this.gamePaused = false;
             }
         }
+
+        if (!logoTween.IsPlaying && logo.activeInHierarchy && Input.anyKeyDown)
+        {
+            logoTween.Play(StartGame);
+        }
+    }
+
+    private void StartGame()
+    {
+        logo.SetActive(false);
+        SetDealer();
+        SetPolice();
+        postProcessing.depthOfField.enabled = false;
+
+        tutorial.SetActive(true);
     }
 }

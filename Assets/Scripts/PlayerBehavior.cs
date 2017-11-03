@@ -9,7 +9,7 @@ public class PlayerBehavior : BaseCharacter {
     private float speed = 2;
 
     private Vector3 direction;
-    private GameManager manager;
+    protected GameManager manager;
     protected Action stateUpdate;
     private float timer;
     private double stateTime;
