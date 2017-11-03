@@ -88,6 +88,10 @@ public class PlayerBehavior : BaseCharacter {
     protected override void Update()
     {
         direction = new Vector2(Input.GetAxisRaw("Horizontal"+this.player), Input.GetAxisRaw("Vertical" + this.player));
+        if (this.player == 1) {
+            //Debug.Log(Input.GetAxisRaw("HorizontalTeclado"));
+            this.direction += new Vector3(Input.GetAxisRaw("HorizontalTeclado"),Input.GetAxisRaw("VerticalTeclado"),0);
+        }
         if(this.stateUpdate != null)
             this.stateUpdate.Invoke();
     }
