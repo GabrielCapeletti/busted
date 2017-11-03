@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
     public EndScreen blackscreen;
     public PostProcessingProfile postProcessing;
     public GameObject tutorial;
+    public GameObject scoreScreen;
 
     [SerializeField]
     private GameObject logo;
@@ -80,6 +81,8 @@ public class GameManager : MonoBehaviour {
             if (spot != null) {    
                 character.SendMessage("MoveTo", spot.transform.position);
             }
+
+            character.transform.parent = transform;
 
             characters.Add(character);
 

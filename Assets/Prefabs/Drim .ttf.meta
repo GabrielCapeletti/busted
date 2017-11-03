@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a69c151aa2b8b5a47a8418ae9ae828af
+timeCreated: 1509702088
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Drim
+  fontNames:
+  - Drim
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

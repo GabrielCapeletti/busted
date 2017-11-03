@@ -11,6 +11,7 @@ public class EndScreen : MonoBehaviour {
 
     public Transform shadow;
     public Transform arrow;
+    public ScoreScreen scoreScreen;
 
     private int currentSuspect = 0;
     private bool changeArrow = false;
@@ -40,10 +41,13 @@ public class EndScreen : MonoBehaviour {
 
         if (Input.GetButtonDown("Action1")) {
             if (this.suspects[this.selectedIndex].GetComponent<CharacterAI>().IsDealer()) {
-                Debug.Log("BUBUBUBUUUUUUUSTED");
+                ScoreScreen.END_TEXT = "VOCÊ PRENDEU A PESSOAL ERRADA.";
             }else {
-                Debug.Log("RACISTA FDP");
+                ScoreScreen.END_TEXT = "BOM TRABALHO! VOCÊ PRENDEU O CRIMINOSO.";
             }
+
+            transform.parent.gameObject.SetActive(false);
+            scoreScreen.Open();
         }
 
         if (Mathf.Abs(axis) > 0 && !this.changeArrow) {
