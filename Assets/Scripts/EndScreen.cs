@@ -39,9 +39,12 @@ public class EndScreen : MonoBehaviour {
         float axis = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetButtonDown("Action1")) {
-            if (this.suspects[this.selectedIndex].GetComponent<CharacterAI>().IsDealer()) {
+            CharacterAI ia = this.suspects[this.selectedIndex].GetComponent<CharacterAI>();
+            if (ia != null && ia.IsDealer()) {
                 Debug.Log("BUBUBUBUUUUUUUSTED");
-            }else {
+            } else if (ia == null) {
+                Debug.Log("BUBUBUBUUUUUUUSTED");
+            } else {
                 Debug.Log("RACISTA FDP");
             }
         }
@@ -66,8 +69,15 @@ public class EndScreen : MonoBehaviour {
     private void ReactivateSuspects() {
         for (int i = 0 ; i < this.suspects.Count ; i++) {
             CharacterAI suspect = this.suspects[i].GetComponent<CharacterAI>();
-            suspect.spriteRenderer.sortingLayerName = "Default";
-            suspect.StartingMove();
+            if (suspect != null) {
+                suspect.spriteRenderer.sortingLayerName = "Default";
+                suspect.StartingMove();
+            }
+            else {
+                PlayerDealerBehaviour suspectPlayer = this.suspects[i].GetComponent<PlayerDealerBehaviour>();
+                suspectPlayer.spriteRenderer.sortingLayerName = "Default";
+                suspectPlayer.StartingMove();
+            }
         }
 
         this.police.spriteRenderer.sortingLayerName = "Default";

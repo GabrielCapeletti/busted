@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerBehavior : BaseCharacter {
     [SerializeField]
-    protected float player = 1;
+    public float player = 1;
     [SerializeField]
     private float speed = 2;
 
@@ -53,7 +53,7 @@ public class PlayerBehavior : BaseCharacter {
     }
     
     #region MOVE
-    private void OnMoveEnter() {
+    protected void OnMoveEnter() {
         this.animator.Play("run");
         this.stateUpdate = this.OnMove;
     }
@@ -88,7 +88,8 @@ public class PlayerBehavior : BaseCharacter {
     protected override void Update()
     {
         direction = new Vector2(Input.GetAxisRaw("Horizontal"+this.player), Input.GetAxisRaw("Vertical" + this.player));
-        this.stateUpdate.Invoke();
+        if(this.stateUpdate != null)
+            this.stateUpdate.Invoke();
     }
 
 }
