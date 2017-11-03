@@ -49,6 +49,8 @@ public class PoliceManBehavior : PlayerBehavior {
 
             for (int i = 0; i < Mathf.Clamp(colliders.Length, 0, maxSuspects); i++)
             {
+                if (colliders[i].name == name) continue;
+
                 colliders[i].SendMessage("JudgeMode");
                 suspects.Add(colliders[i].gameObject);
             }

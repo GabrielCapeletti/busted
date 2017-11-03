@@ -1095,6 +1095,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupId: 0
   isGroup: 0
+--- !u!1001 &1104796559
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4039471547139770, guid: 83a6b0c112d06ef4088eb3cc9701f8f9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039471547139770, guid: 83a6b0c112d06ef4088eb3cc9701f8f9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039471547139770, guid: 83a6b0c112d06ef4088eb3cc9701f8f9, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039471547139770, guid: 83a6b0c112d06ef4088eb3cc9701f8f9, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039471547139770, guid: 83a6b0c112d06ef4088eb3cc9701f8f9, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039471547139770, guid: 83a6b0c112d06ef4088eb3cc9701f8f9, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039471547139770, guid: 83a6b0c112d06ef4088eb3cc9701f8f9, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039471547139770, guid: 83a6b0c112d06ef4088eb3cc9701f8f9, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 83a6b0c112d06ef4088eb3cc9701f8f9, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1107764725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,8 +1578,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blackscreen: {fileID: 384269768}
   slotContainer: {fileID: 719840091}
-  characterModel: {fileID: 1882544401858040, guid: 060b17153255eaa4dabfd0471ba192fd,
-    type: 2}
+  characterModel:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   totalOfCharacters: 15
 --- !u!1 &1354959703
 GameObject:
@@ -2166,7 +2210,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleDifference: 0.42
+  spriteRenderer: {fileID: 0}
   speed: 1.5
+  stopWalking: 0
 --- !u!1 &2043983841
 GameObject:
   m_ObjectHideFlags: 0

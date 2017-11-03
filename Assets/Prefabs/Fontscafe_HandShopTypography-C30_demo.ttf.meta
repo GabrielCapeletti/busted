@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 02b186d6f061f67499ae7e4a0e6f0a1c
+timeCreated: 1509667878
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Hand Shop Typography C30_demo
+  fontNames:
+  - Hand Shop Typography C30_demo
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
