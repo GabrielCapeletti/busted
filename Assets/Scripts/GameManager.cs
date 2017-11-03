@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
 
     private PotaTween logoTween;
     private GameObject dealer;
+    private bool gameBegan = false;
     private bool hasPlayer2 = false;
     public bool gamePaused { get; set; }
 
@@ -161,7 +162,7 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        if (Input.GetButtonDown("Start2")) {
+        if (gameBegan && Input.GetButtonDown("Start2")) {
             Debug.Log("Start2");
             if (!this.hasPlayer2) {
                 this.EnterPlayer2();
@@ -197,7 +198,7 @@ public class GameManager : MonoBehaviour {
         this.SetDealer();
         this.SetPolice();
         this.postProcessing.depthOfField.enabled = false;
-
+        gameBegan = true;
         this.tutorial.SetActive(true);
     }
 }

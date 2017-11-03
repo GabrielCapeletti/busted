@@ -24,10 +24,16 @@ public class CharacterAI : BaseCharacter {
     private Spot oldSpot;
     public bool drugged = false;
     private CharacterAI closeChar;
-
+    private GameObject blabla;
     protected override void Start() {
         base.Start();
         this.stateUpdate = this.OnMoveEnter;
+
+
+        GameObject blahPrefab= Resources.Load<GameObject>("Prefabs/BlahBlah") as GameObject;
+        this.blabla = GameObject.Instantiate(blahPrefab, this.transform.position + new Vector3(0,3.58f,0), Quaternion.identity);
+        this.blabla.SetActive(false);
+        this.blabla.transform.parent = this.transform;
     }
 
     public bool IsDealer() {
@@ -79,7 +85,7 @@ public class CharacterAI : BaseCharacter {
     private void OnTalkEnter() {
         this.spriteRenderer.flipX = this.closeChar.transform.position.x < this.transform.position.x;
         this.closeChar.spriteRenderer.flipX = !this.spriteRenderer.flipX;
-
+        this.blabla.SetActive(true);
         if (this.dealer && !this.closeChar.drugged) {
             this.closeChar.OnDruggedEnter();
             this.closeChar.PlayTalkAnim();
@@ -151,7 +157,9 @@ public class CharacterAI : BaseCharacter {
     }
 
     public void EndState() {
-        if(this.drugged)
+        this.blabla.SetActive(false);
+
+        if (this.drugged)
             return;
 
         this.timer = 0;
@@ -211,6 +219,8 @@ public class CharacterAI : BaseCharacter {
     }
 
     public void FinishListening() {
+        this.blabla.SetActive(false);
+
         if (this.drugged) {
             this.animator.Play("drugged");
             Destroy(this);
