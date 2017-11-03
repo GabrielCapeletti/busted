@@ -5,7 +5,7 @@ using UnityEngine;
 public class PoliceManBehavior : PlayerBehavior {
 
     private BoxCollider2D boxCollider;
-    private bool stopWalking = false;
+    public bool stopWalking = false;
 
     protected override void Start()
     {

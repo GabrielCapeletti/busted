@@ -8,7 +8,7 @@ public class BaseCharacter : MonoBehaviour {
     [SerializeField]
     private float scaleDifference;
 
-    protected SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
     protected Animator animator;
     private float maxHeight;
     private float initialScale;

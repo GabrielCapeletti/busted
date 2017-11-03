@@ -30,6 +30,10 @@ public class CharacterAI : BaseCharacter {
         this.stateUpdate = this.OnMoveEnter;
     }
 
+    public bool IsDealer() {
+        return this.dealer;
+    }
+
     public void BecomeDealer() {
         this.dealer = true;
     }
@@ -138,7 +142,17 @@ public class CharacterAI : BaseCharacter {
     }
     #endregion
 
-    private void EndState() {
+    public void StartingMove() {
+        this.timer = 0;
+        this.cumulativeTime = 0;
+
+        this.stateUpdate = this.OnMoveEnter;
+    }
+
+    public void EndState() {
+        if(this.drugged)
+            return;
+
         this.timer = 0;
         this.cumulativeTime = 0;
         float rnd = UnityEngine.Random.Range(0f, 1f);
@@ -216,6 +230,9 @@ public class CharacterAI : BaseCharacter {
     }
 
     protected override void Update() {
+        if(GameManager.Instance.gamePaused)
+            return;
+
         if(this.stateUpdate != null)
             this.stateUpdate.Invoke();
     }

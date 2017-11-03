@@ -36,8 +36,10 @@ public class GameManager : MonoBehaviour {
 
     private List<Vector3> positionSlots;
 
-    private void Start()
-    {
+    public bool gamePaused { get; set; }
+
+    private void Start() {
+        this.gamePaused = false;
         this.SaveSlots();
         this.SetupCharacters();
     }
@@ -80,9 +82,17 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void OpenEndScreen(List<GameObject> suspects, PoliceManBehavior police)
-    {
+    public void OpenEndScreen(List<GameObject> suspects, PoliceManBehavior police) {
+        this.gamePaused = true;
         blackscreen.Open(suspects, police);
     }
 
+    void Update() {
+        if (gamePaused) {
+            if (Input.GetButtonDown("Cancel")) {
+                this.blackscreen.Close();
+                this.gamePaused = false;
+            }
+        }
+    }
 }
