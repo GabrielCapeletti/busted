@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScoreScreen : MonoBehaviour {
 
@@ -43,6 +44,14 @@ public class ScoreScreen : MonoBehaviour {
             characterIcon.transform.position = score.position + newPos;
 
             tweenAlpha.Play();
+        }
+    }
+
+    public void Update()
+    {
+        if (Input.GetButtonDown("Action1"))
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }
