@@ -73,9 +73,7 @@ public class GameManager : MonoBehaviour {
         int dealerIndex = Random.Range(0, this.characterModel.Length);
 
         while (index < this.totalOfCharacters) {
-
-            int rand = Random.Range(0, this.characterModel.Length);
-            GameObject character = Instantiate(this.characterModel[rand]);
+            GameObject character = Instantiate(this.characterModel[index%this.characterModel.Length]);
             character.name += "" + index;
             Spot spot = SpotManager.Instance.FindNextPosition();
 
