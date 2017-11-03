@@ -19,7 +19,7 @@ public class PoliceManBehavior : PlayerBehavior {
             base.Update();
         }
 
-        if (Input.GetButtonDown("Action"))
+        if (Input.GetButtonDown("Action" + this.player))
         {
             stateUpdate = OnTalkEnter;
         }

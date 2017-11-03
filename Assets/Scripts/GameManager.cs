@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour {
 
     void Update() {
         if (gamePaused) {
-            if (Input.GetButtonDown("Cancel")) {
+            if (Input.GetButtonDown("Cancel1")) {
                 this.blackscreen.Close();
                 this.gamePaused = false;
             }

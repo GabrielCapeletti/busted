@@ -38,7 +38,7 @@ public class EndScreen : MonoBehaviour {
     {
         float axis = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Action")) {
+        if (Input.GetButtonDown("Action1")) {
             if (this.suspects[this.selectedIndex].GetComponent<CharacterAI>().IsDealer()) {
                 Debug.Log("BUBUBUBUUUUUUUSTED");
             }else {

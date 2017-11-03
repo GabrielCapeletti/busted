@@ -22,7 +22,7 @@ public class CharacterAI : BaseCharacter {
     private Vector2 targetPosition;
     private Spot currentSpot;
     private Spot oldSpot;
-    private bool drugged = false;
+    public bool drugged = false;
     private CharacterAI closeChar;
 
     protected override void Start() {
@@ -82,6 +82,7 @@ public class CharacterAI : BaseCharacter {
 
         if (this.dealer && !this.closeChar.drugged) {
             this.closeChar.OnDruggedEnter();
+            this.closeChar.PlayTalkAnim();
             this.animator.Play("deal");
             this.stateTime = 2.34f;
             this.stateUpdate = this.OnTalk;
@@ -188,11 +189,16 @@ public class CharacterAI : BaseCharacter {
         }
     }
 
+    public void PlayTalkAnim() {
+        this.animator.Play("talk");
+    }
+
     public void OnDruggedEnter() {
         this.drugged = true;
-        this.animator.Play("talk");
         this.stateUpdate = null;
-        this.GetComponent<Collider2D>().enabled = false;
+        Collider2D coll = this.GetComponent<Collider2D>();
+        if(coll != null)
+            Destroy(coll);        
     }
 
     public void GoListening() {
@@ -207,6 +213,7 @@ public class CharacterAI : BaseCharacter {
     public void FinishListening() {
         if (this.drugged) {
             this.animator.Play("drugged");
+            Destroy(this);
             return;
         }
 

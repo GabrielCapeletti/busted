@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehavior : BaseCharacter {
-
+    [SerializeField]
+    protected float player = 1;
     [SerializeField]
     private float speed = 2;
 
     private Vector3 direction;
     private GameManager manager;
     protected Action stateUpdate;
-    private float timer;
-    private double stateTime;
+    protected float timer;
+    protected double stateTime;
 
     protected override void Start()
     {
@@ -22,7 +23,7 @@ public class PlayerBehavior : BaseCharacter {
         this.MoveTo(this.transform.position);
     }
 
-    private void OnWaitAnim() {
+    protected virtual void OnWaitAnim() {
         if (direction.magnitude > 0) {
             this.stateUpdate = this.OnMoveEnter;
             return;
@@ -46,7 +47,7 @@ public class PlayerBehavior : BaseCharacter {
     }
 
     protected virtual void OnTalkEnter() {
-        this.animator.Play("idle");
+        this.animator.Play("talk");
         this.stateTime = 1;
         this.stateUpdate = this.OnWaitAnim;
     }
@@ -57,7 +58,7 @@ public class PlayerBehavior : BaseCharacter {
         this.stateUpdate = this.OnMove;
     }
 
-    private void OnMove() {
+    protected virtual void OnMove() {
         if (direction.magnitude <= 0) {
             this.stateUpdate = this.EndState;
             return;
@@ -86,7 +87,7 @@ public class PlayerBehavior : BaseCharacter {
 
     protected override void Update()
     {
-        direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        direction = new Vector2(Input.GetAxisRaw("Horizontal"+this.player), Input.GetAxisRaw("Vertical" + this.player));
         this.stateUpdate.Invoke();
     }
 
