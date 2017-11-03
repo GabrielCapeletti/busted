@@ -14,14 +14,14 @@ public class PoliceManBehavior : PlayerBehavior {
 
     protected override void Update()
     {
-        if (!stopWalking)
+        if (!this.stopWalking)
         {
             base.Update();
         }
 
         if (Input.GetButtonDown("Action" + this.player))
         {
-            stateUpdate = OnTalkEnter;
+            this.stateUpdate = this.OnTalkEnter;
         }
 
     }
@@ -30,40 +30,39 @@ public class PoliceManBehavior : PlayerBehavior {
     {
         int layerMask = 1 << LayerMask.NameToLayer("Suspects");
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(spriteRenderer.bounds.center, 0.8f, layerMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(this.spriteRenderer.bounds.center, 0.8f, layerMask);
 
         int flipDir = 1;
-        if (spriteRenderer.flipX)
+        if (this.spriteRenderer.flipX)
         {
             flipDir = -1;
         }
 
         if (colliders.Length > 0)
         {
-
-            stopWalking = true;
+            this.stopWalking = true;
             int maxSuspects = 3;
-            spriteRenderer.sortingLayerName = "Front";
+            this.spriteRenderer.sortingLayerName = "Front";
 
             List<GameObject> suspects = new List<GameObject>();
 
             for (int i = 0; i < Mathf.Clamp(colliders.Length, 0, maxSuspects); i++)
             {
-                if (colliders[i].name == name) continue;
+                if (colliders[i].name == this.name) continue;
 
                 colliders[i].SendMessage("JudgeMode");
                 suspects.Add(colliders[i].gameObject);
             }
 
-            animator.Play("busted");
-            stateUpdate = ChooseSuspect;
+            this.animator.Play("busted");
+            this.stateUpdate = this.ChooseSuspect;
 
             GameManager.Instance.OpenEndScreen(suspects, this);
 
         }
         else
         {
-            stateUpdate = OnIdleEnter;
+            this.stateUpdate = this.OnIdleEnter;
         }
     }
 

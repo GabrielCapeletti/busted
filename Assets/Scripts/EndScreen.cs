@@ -40,10 +40,14 @@ public class EndScreen : MonoBehaviour {
         float axis = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetButtonDown("Action1")) {
-            if (this.suspects[this.selectedIndex].GetComponent<CharacterAI>().IsDealer()) {
-                ScoreScreen.END_TEXT = "VOCÊ PRENDEU A PESSOAL ERRADA.";
-            }else {
+            CharacterAI ia = this.suspects[this.selectedIndex].GetComponent<CharacterAI>();
+            if (ia != null && ia.IsDealer()) {
+            } else if (ia == null)
+            {
                 ScoreScreen.END_TEXT = "BOM TRABALHO! VOCÊ PRENDEU O CRIMINOSO.";
+            } else {
+
+                ScoreScreen.END_TEXT = "VOCÊ PRENDEU A PESSOAL ERRADA.";
             }
 
             transform.parent.gameObject.SetActive(false);
@@ -70,8 +74,15 @@ public class EndScreen : MonoBehaviour {
     private void ReactivateSuspects() {
         for (int i = 0 ; i < this.suspects.Count ; i++) {
             CharacterAI suspect = this.suspects[i].GetComponent<CharacterAI>();
-            suspect.spriteRenderer.sortingLayerName = "Default";
-            suspect.StartingMove();
+            if (suspect != null) {
+                suspect.spriteRenderer.sortingLayerName = "Default";
+                suspect.StartingMove();
+            }
+            else {
+                PlayerDealerBehaviour suspectPlayer = this.suspects[i].GetComponent<PlayerDealerBehaviour>();
+                suspectPlayer.spriteRenderer.sortingLayerName = "Default";
+                suspectPlayer.StartingMove();
+            }
         }
 
         this.police.spriteRenderer.sortingLayerName = "Default";
@@ -86,6 +97,9 @@ public class EndScreen : MonoBehaviour {
     }
 
     public void Open(List<GameObject> suspects, PoliceManBehavior police) {
+
+        GameManager.Instance.tutorial.SetActive(false);
+
         this.police = police;
         this.suspects = suspects;
         this.selectedIndex = 0;

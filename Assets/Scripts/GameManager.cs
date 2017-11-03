@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour {
     private List<GameObject> characters;
 
     private PotaTween logoTween;
-
+    private GameObject dealer;
+    private bool hasPlayer2 = false;
     public bool gamePaused { get; set; }
 
     private void Start() {
@@ -54,17 +55,17 @@ public class GameManager : MonoBehaviour {
         this.SaveSlots();
         this.SetupCharacters();
 
-        logoTween = PotaTween.Create(logo);
-        logoTween.SetAlpha(1f, 0f);
-        logoTween.SetDuration(2f);
+        this.logoTween = PotaTween.Create(this.logo);
+        this.logoTween.SetAlpha(1f, 0f);
+        this.logoTween.SetDuration(2f);
 
-        postProcessing.depthOfField.enabled = true;
+        this.postProcessing.depthOfField.enabled = true;
 
     }
 
     private void SetupCharacters()
     {
-        characters = new List<GameObject>();
+        this.characters = new List<GameObject>();
 
         this.totalOfCharacters = Mathf.Clamp(this.totalOfCharacters, 0, this.positionSlots.Count - 1);
 
@@ -93,12 +94,13 @@ public class GameManager : MonoBehaviour {
 
     private void SetPolice()
     {
-        GameObject character = characters[0];
+        GameObject character = this.characters[0];
 
         CharacterAI ai = character.GetComponent<CharacterAI>();
         float scaleDiference = ai.GetScaleDifference();
-        GameObject.Destroy(character.GetComponent<CharacterAI>());
-        GameObject.Destroy(character.GetComponent<BoxCollider2D>());
+        ai.enabled = false;
+        //GameObject.Destroy(character.GetComponent<CharacterAI>());
+        Destroy(character.GetComponent<BoxCollider2D>());
         PoliceManBehavior police = character.AddComponent<PoliceManBehavior>();
         police.SetScaleDifference(scaleDiference);
         police.SetInitialScale(0.5f);
@@ -119,11 +121,24 @@ public class GameManager : MonoBehaviour {
             {
                 ia.name = "Dealer";
                 ia.BecomeDealer();
+                this.dealer = ia.gameObject;
             }
 
             index++;
         }
             
+    }
+
+    private void EnterPlayer2() {
+        CharacterAI ai = this.dealer.GetComponent<CharacterAI>();
+
+        float scaleDiference = ai.GetScaleDifference();
+
+        Destroy(ai);
+        PlayerDealerBehaviour playerDealer = this.dealer.AddComponent<PlayerDealerBehaviour>();
+        playerDealer.SetScaleDifference(scaleDiference);
+        playerDealer.SetInitialScale(0.5f);
+        playerDealer.player = 2;
     }
 
     private void SaveSlots()
@@ -140,30 +155,59 @@ public class GameManager : MonoBehaviour {
 
     public void OpenEndScreen(List<GameObject> suspects, PoliceManBehavior police) {
         this.gamePaused = true;
-        blackscreen.Open(suspects, police);
+        this.blackscreen.Open(suspects, police);
     }
 
     void Update() {
-        if (gamePaused) {
+        if (this.gamePaused) {
             if (Input.GetButtonDown("Cancel1")) {
                 this.blackscreen.Close();
                 this.gamePaused = false;
             }
         }
 
-        if (!logoTween.IsPlaying && logo.activeInHierarchy && Input.anyKeyDown)
-        {
-            logoTween.Play(StartGame);
+        if (Input.GetButtonDown("Start2")) {
+            Debug.Log("Start2");
+            if (!this.hasPlayer2) {
+                this.EnterPlayer2();
+                this.hasPlayer2 = true;
+            }
         }
+        //if (Input.GetButtonDown("Action1")) {
+        //    Debug.Log("Action1");
+        //}
+        //if (Input.GetButtonDown("Action2")) {
+        //    Debug.Log("Action2");
+        //}
+        //if (Input.GetButtonDown("Cancel1")) {
+        //    Debug.Log("Cancel1");
+        //}
+        //if (Input.GetButtonDown("Cancel2")) {
+        //    Debug.Log("Cancel2");
+        //}
+        //if (!this.hasPlayer2) {
+        //        this.EnterPlayer2();
+        //        this.hasPlayer2 = true;
+        //    }
+
+        if (!this.logoTween.IsPlaying && this.logo.activeInHierarchy && Input.anyKeyDown)
+        {
+            this.logoTween.Play(this.StartGame);
+        }
+    }
+
+    public List<GameObject> GetCharacters()
+    {
+        return characters;
     }
 
     private void StartGame()
     {
-        logo.SetActive(false);
-        SetDealer();
-        SetPolice();
-        postProcessing.depthOfField.enabled = false;
+        this.logo.SetActive(false);
+        this.SetDealer();
+        this.SetPolice();
+        this.postProcessing.depthOfField.enabled = false;
 
-        tutorial.SetActive(true);
+        this.tutorial.SetActive(true);
     }
 }

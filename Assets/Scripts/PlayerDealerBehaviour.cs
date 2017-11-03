@@ -36,11 +36,24 @@ public class PlayerDealerBehaviour : PlayerBehavior {
         }
     }
 
+    public void StartingMove() {
+        this.timer = 0;
+        this.stateUpdate = this.OnMoveEnter;
+    }
+
+
+    public void JudgeMode() {
+        this.animator.Play("handsUp");
+        this.spriteRenderer.sortingLayerName = "Front";
+
+        this.stateUpdate = null;
+    }
+
     private void TrySellDrug() {
         int layer = 1 << LayerMask.NameToLayer("Suspects");
         Collider2D coll = Physics2D.OverlapCircle(this.transform.position +new Vector3(0,1.68f,0),1.2f,layer);
 
-        if (coll != null) {
+        if (coll != null && coll.name != this.name) {
             Debug.Log("Try selling drug");
 
             this.closeChar = coll.GetComponent<CharacterAI>();

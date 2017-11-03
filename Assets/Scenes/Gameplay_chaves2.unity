@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 102069947}
   - component: {fileID: 102069949}
   - component: {fileID: 102069948}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -908,7 +908,7 @@ GameObject:
   m_Component:
   - component: {fileID: 491995944}
   - component: {fileID: 491995945}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: ScoreScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -928,6 +928,7 @@ Transform:
   - {fileID: 2043168027}
   - {fileID: 854370503}
   - {fileID: 1917001630}
+  - {fileID: 976223361}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -942,6 +943,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8326070d93de60e4a8723cf499378c56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 665964125}
+  score: {fileID: 976223361}
 --- !u!1 &547735750
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,7 +1168,7 @@ GameObject:
   - component: {fileID: 665964126}
   - component: {fileID: 665964125}
   - component: {fileID: 665964127}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,7 +1202,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 80
+  m_FontSize: 70
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: a69c151aa2b8b5a47a8418ae9ae828af, type: 3}
@@ -1590,7 +1593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 854370503}
   - component: {fileID: 854370504}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Blackscreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1604,7 +1607,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 854370502}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7933995, y: -0.1386103, z: -0.15}
+  m_LocalPosition: {x: -1.7933995, y: -0.1386103, z: 2.37}
   m_LocalScale: {x: 20, y: 12, z: 1}
   m_Children: []
   m_Father: {fileID: 491995944}
@@ -1776,6 +1779,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &976223360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 976223361}
+  m_Layer: 0
+  m_Name: point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &976223361
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 976223360}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.42, y: -3.06, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 491995944}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &991988784
 GameObject:
   m_ObjectHideFlags: 0
@@ -3182,7 +3213,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1917001630}
   - component: {fileID: 1917001631}
-  m_Layer: 10
+  - component: {fileID: 1917001632}
+  m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3196,8 +3228,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1917001629}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7933995, y: 0.29, z: -1.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.7933995, y: 0.21, z: 1.84}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_Children:
   - {fileID: 665964124}
   m_Father: {fileID: 491995944}
@@ -3245,6 +3277,86 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!114 &1917001632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1917001629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a6733ae5f7bad46a62e604fc32d268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tag: 
+  Id: 0
+  PlayOnStart: 0
+  PlayOnEnable: 1
+  Duration: 1
+  Speed: 0
+  Delay: 0
+  Loop: 0
+  LoopsNumber: 0
+  EasingReference: 0
+  EaseEquation: 21
+  Curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  FlipCurveOnReverse: 1
+  Position:
+    From: {x: 0, y: -2, z: 0}
+    To: {x: 0, y: 0, z: 0}
+    IsLocal: 1
+    IsRelative: 1
+    IgnoreAxis:
+      X: 1
+      Y: 0
+      Z: 1
+  Rotation:
+    From: {x: 0, y: 0, z: 0}
+    To: {x: 0, y: 0, z: 0}
+    IsLocal: 0
+    IsRelative: 0
+    IgnoreAxis:
+      X: 0
+      Y: 0
+      Z: 0
+  Scale:
+    From: {x: 0, y: 0, z: 0}
+    To: {x: 0, y: 0, z: 0}
+    IsLocal: 0
+    IsRelative: 0
+    IgnoreAxis:
+      X: 0
+      Y: 0
+      Z: 0
+  Color:
+    From: {r: 0, g: 0, b: 0, a: 0}
+    To: {r: 0, g: 0, b: 0, a: 0}
+  Alpha:
+    From: 0
+    To: 1
+    Value: 0
+  Float:
+    From: 0
+    To: 0
+    Value: 0
+  _isPlaying: 0
+  _isReversing: 0
+  _isPaused: 0
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PotaTween+PotaTweenEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  _onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PotaTween+PotaTweenEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!4 &1968425986
 Transform:
   m_ObjectHideFlags: 0
@@ -3366,7 +3478,7 @@ GameObject:
   - component: {fileID: 2043168027}
   - component: {fileID: 2043168029}
   - component: {fileID: 2043168028}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Logo (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
