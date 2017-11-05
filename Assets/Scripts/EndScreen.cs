@@ -36,17 +36,18 @@ public class EndScreen : MonoBehaviour {
 
     public void Update()
     {
-        float axis = Input.GetAxisRaw("Horizontal");
-
+        float axis = Input.GetAxisRaw("Horizontal1");
+        axis += Input.GetAxisRaw("HorizontalTeclado");
         if (Input.GetButtonDown("Action1")) {
             CharacterAI ia = this.suspects[this.selectedIndex].GetComponent<CharacterAI>();
             if (ia != null && ia.IsDealer()) {
+                ScoreScreen.END_TEXT = "BOM TRABALHO! VOCÊ PRENDEU O CRIMINOSO.";
             } else if (ia == null)
             {
                 ScoreScreen.END_TEXT = "BOM TRABALHO! VOCÊ PRENDEU O CRIMINOSO.";
             } else {
 
-                ScoreScreen.END_TEXT = "VOCÊ PRENDEU A PESSOAL ERRADA.";
+                ScoreScreen.END_TEXT = "VOCÊ PRENDEU A PESSOA ERRADA.";
             }
 
             transform.parent.gameObject.SetActive(false);

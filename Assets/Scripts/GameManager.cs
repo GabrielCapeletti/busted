@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+    public static int PEOPLE_ON_PARTY = 10;
+
     public EndScreen blackscreen;
     public PostProcessingProfile postProcessing;
     public GameObject tutorial;
@@ -53,6 +55,8 @@ public class GameManager : MonoBehaviour {
     public bool gamePaused { get; set; }
 
     private void Start() {
+
+        GameManager.PEOPLE_ON_PARTY = 10;
         this.gamePaused = false;
         this.SaveSlots();
         this.SetupCharacters();
@@ -69,12 +73,12 @@ public class GameManager : MonoBehaviour {
     {
         this.characters = new List<GameObject>();
 
-        this.totalOfCharacters = Mathf.Clamp(this.totalOfCharacters, 0, this.positionSlots.Count - 1);
+        //this.totalOfCharacters = Mathf.Clamp(this.totalOfCharacters, 0, this.positionSlots.Count - 1);
 
         int index = 0;
         int dealerIndex = Random.Range(0, this.characterModel.Length);
 
-        while (index < this.totalOfCharacters) {
+        while (index < PEOPLE_ON_PARTY) {
             GameObject character = Instantiate(this.characterModel[index%this.characterModel.Length]);
             character.name += "" + index;
             Spot spot = SpotManager.Instance.FindNextPosition();
@@ -112,7 +116,9 @@ public class GameManager : MonoBehaviour {
         int index = 0;
         int dealerIndex = Random.Range(1, this.characters.Count - 1);
 
-        while (index < this.totalOfCharacters)
+        Debug.Log(this.characters.Count);
+
+        while (index < this.characters.Count)
         {
             GameObject character = this.characters[index];
             CharacterAI ia = character.GetComponent<CharacterAI>();
@@ -191,10 +197,10 @@ public class GameManager : MonoBehaviour {
         //        this.hasPlayer2 = true;
         //    }
 
-        if (!this.logoTween.IsPlaying && this.logo.activeInHierarchy && Input.anyKeyDown)
+        /*if (!this.logoTween.IsPlaying && this.logo.activeInHierarchy && Input.anyKeyDown)
         {
             this.logoTween.Play(this.StartGame);
-        }
+        }*/
     }
 
     public List<GameObject> GetCharacters()
@@ -202,13 +208,38 @@ public class GameManager : MonoBehaviour {
         return characters;
     }
 
-    private void StartGame()
-    {
+    public void StartGame() {
+        AddMoreCharacters();
+
         this.logo.SetActive(false);
         this.SetDealer();
         this.SetPolice();
         this.postProcessing.depthOfField.enabled = false;
         gameBegan = true;
         this.tutorial.SetActive(true);
+    }
+
+    private void AddMoreCharacters() {
+        int index = 0;
+        //int dealerIndex = Random.Range(0, this.characterModel.Length);
+
+        Debug.Log(PEOPLE_ON_PARTY - this.characters.Count);
+        int totalToAdd = Mathf.Max(0, PEOPLE_ON_PARTY - this.characters.Count);
+
+        while (index < totalToAdd) {
+            GameObject character = Instantiate(this.characterModel[index%this.characterModel.Length]);
+            character.name += "" + index;
+            Spot spot = SpotManager.Instance.FindNextPosition();
+
+            if (spot != null) {
+                character.SendMessage("MoveTo",spot.transform.position);
+            }
+
+            character.transform.parent = transform;
+
+            characters.Add(character);
+
+            index++;
+        }
     }
 }
