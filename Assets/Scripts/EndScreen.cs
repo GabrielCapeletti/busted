@@ -41,13 +41,13 @@ public class EndScreen : MonoBehaviour {
         if (Input.GetButtonDown("Action1")) {
             CharacterAI ia = this.suspects[this.selectedIndex].GetComponent<CharacterAI>();
             if (ia != null && ia.IsDealer()) {
-                ScoreScreen.END_TEXT = "BOM TRABALHO! VOCÊ PRENDEU O CRIMINOSO.";
+                ScoreScreen.END_TEXT = StringTable.GetText("WRONG_SUSPECT");
             } else if (ia == null)
             {
-                ScoreScreen.END_TEXT = "BOM TRABALHO! VOCÊ PRENDEU O CRIMINOSO.";
+                ScoreScreen.END_TEXT = StringTable.GetText("BUSTED");
             } else {
 
-                ScoreScreen.END_TEXT = "VOCÊ PRENDEU A PESSOA ERRADA.";
+                ScoreScreen.END_TEXT = StringTable.GetText("WRONG_SUSPECT");
             }
 
             transform.parent.gameObject.SetActive(false);
