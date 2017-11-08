@@ -202,6 +202,8 @@ public class CharacterAI : BaseCharacter {
 
     public void OnDruggedEnter() {
         this.drugged = true;
+
+
         this.stateUpdate = null;
         Collider2D coll = this.GetComponent<Collider2D>();
         if(coll != null)
@@ -222,11 +224,19 @@ public class CharacterAI : BaseCharacter {
 
         if (this.drugged) {
             this.animator.Play("drugged");
-            Destroy(this);
+
+            Invoke("DestroyAI",0.1f);
+
             return;
         }
 
         this.EndState();
+    }
+
+    private void DestroyAI()
+    {
+        SendMessageUpwards("DruggedOn", spriteRenderer.sprite);
+        Destroy(this);
     }
 
     private void ChooseActionOnNonEmptyGroup() {

@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
     public GameObject tutorial;
     public GameObject scoreScreen;
     public GameObject player2;
-    public GameObject druggedCounter;
+    public DealerCounter dealerCounter;
 
     [SerializeField]
     private GameObject logo;
@@ -219,7 +219,12 @@ public class GameManager : MonoBehaviour {
         gameBegan = true;
         this.tutorial.SetActive(true);
 
-        druggedCounter.SetActive(true);
+        dealerCounter.gameObject.SetActive(true);
+    }
+
+    public void DruggedOn(Sprite sprite)
+    {
+        dealerCounter.AddJunk(sprite);
     }
 
     private void AddMoreCharacters() {
@@ -243,4 +248,5 @@ public class GameManager : MonoBehaviour {
             index++;
         }
     }
+    
 }
