@@ -46,7 +46,7 @@ public class MenuInicial : MonoBehaviour {
         if (Input.GetButtonDown("Action1")) {
             switch (this.selectedIndex) {
                 case 0:
-                    GameManager.PEOPLE_ON_PARTY = 10;
+                    GameManager.PEOPLE_ON_PARTY = 11;
                     GameManager.Instance.StartGame();
                     this.turnOffMenu = true;
                     break;
@@ -56,7 +56,7 @@ public class MenuInicial : MonoBehaviour {
                     this.turnOffMenu = true;
                     break;
                 case 2:
-                    GameManager.PEOPLE_ON_PARTY = 20;
+                    GameManager.PEOPLE_ON_PARTY = 21;
                     GameManager.Instance.StartGame();
                     this.turnOffMenu = true;
                     break;

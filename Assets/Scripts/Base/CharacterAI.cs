@@ -93,7 +93,6 @@ public class CharacterAI : BaseCharacter {
             this.stateTime = 2.34f;
             this.stateUpdate = this.OnTalk;
         } else {
-            Debug.Log("Talk");
             this.closeChar.GoListening();
             this.animator.Play("talk");
             this.stateTime = 2.15f;

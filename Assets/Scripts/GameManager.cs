@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+    public static int CROWDED = 30;
+    public static int MIN_PEOPLE = 10;
     public static int PEOPLE_ON_PARTY = 10;
 
     public EndScreen blackscreen;
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour {
     public GameObject tutorial;
     public GameObject scoreScreen;
     public GameObject player2;
+    public GameObject druggedCounter;
 
     [SerializeField]
     private GameObject logo;
@@ -56,7 +59,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
 
-        GameManager.PEOPLE_ON_PARTY = 10;
+        GameManager.PEOPLE_ON_PARTY = MIN_PEOPLE;
         this.gamePaused = false;
         this.SaveSlots();
         this.SetupCharacters();
@@ -115,8 +118,6 @@ public class GameManager : MonoBehaviour {
     {
         int index = 0;
         int dealerIndex = Random.Range(1, this.characters.Count - 1);
-
-        Debug.Log(this.characters.Count);
 
         while (index < this.characters.Count)
         {
@@ -217,13 +218,13 @@ public class GameManager : MonoBehaviour {
         this.postProcessing.depthOfField.enabled = false;
         gameBegan = true;
         this.tutorial.SetActive(true);
+
+        druggedCounter.SetActive(true);
     }
 
     private void AddMoreCharacters() {
         int index = 0;
         //int dealerIndex = Random.Range(0, this.characterModel.Length);
-
-        Debug.Log(PEOPLE_ON_PARTY - this.characters.Count);
         int totalToAdd = Mathf.Max(0, PEOPLE_ON_PARTY - this.characters.Count);
 
         while (index < totalToAdd) {
