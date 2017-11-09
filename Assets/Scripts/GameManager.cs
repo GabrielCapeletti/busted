@@ -225,6 +225,7 @@ public class GameManager : MonoBehaviour {
     public void DruggedOn(Sprite sprite)
     {
         dealerCounter.AddJunk(sprite);
+       
     }
 
     private void AddMoreCharacters() {
