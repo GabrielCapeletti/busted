@@ -40,8 +40,9 @@ public class EndScreen : MonoBehaviour {
         axis += Input.GetAxisRaw("HorizontalTeclado");
         if (Input.GetButtonDown("Action1")) {
             CharacterAI ia = this.suspects[this.selectedIndex].GetComponent<CharacterAI>();
+            
             if (ia != null && ia.IsDealer()) {
-                ScoreScreen.END_TEXT = StringTable.GetText("WRONG_SUSPECT");
+                ScoreScreen.END_TEXT = StringTable.GetText("BUSTED");
             } else if (ia == null)
             {
                 ScoreScreen.END_TEXT = StringTable.GetText("BUSTED");

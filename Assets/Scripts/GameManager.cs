@@ -116,7 +116,14 @@ public class GameManager : MonoBehaviour {
 
     private void SetDealer()
     {
-        int index = 0;
+        GameObject character = this.characters[1];
+        CharacterAI ia = character.GetComponent<CharacterAI>();
+
+        ia.name = "Dealer";
+        ia.BecomeDealer();
+        this.dealer = ia.gameObject;
+
+        /*int index = 0;
         int dealerIndex = Random.Range(1, this.characters.Count - 1);
 
         while (index < this.characters.Count)
@@ -132,7 +139,7 @@ public class GameManager : MonoBehaviour {
             }
 
             index++;
-        }
+        }*/
             
     }
 
