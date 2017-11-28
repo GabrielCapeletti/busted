@@ -8,8 +8,10 @@ public class ScoreScreen : MonoBehaviour {
     public static string END_TEXT = "";
     public TextMesh text;
     public Transform score;
+    public GameObject dealerFrame;
+    public GameObject copFrame;
 
-	void Start () {
+    void Start () {
 		
 	}
 
@@ -42,6 +44,17 @@ public class ScoreScreen : MonoBehaviour {
             newPos.z = (Vector3.back * (int)(i / totalLine)).z;
 
             characterIcon.transform.position = score.position + newPos;
+
+            if (i == GameManager.COP_INDEX)
+            {
+                copFrame.SetActive(true);
+                copFrame.transform.position = characterIcon.transform.position + (Vector3.up * spriteRenderer.bounds.size.y * 1.05f);
+            }
+            else if (i == GameManager.DEALER_INDEX)
+            {
+                dealerFrame.SetActive(true);
+                dealerFrame.transform.position = characterIcon.transform.position + (Vector3.up * spriteRenderer.bounds.size.y * 1.05f);
+            }
 
             tweenAlpha.Play();
         }

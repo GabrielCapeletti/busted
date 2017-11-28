@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour {
     public static int MIN_PEOPLE = 10;
     public static int PEOPLE_ON_PARTY = 10;
 
+    public const int DEALER_INDEX = 1;
+    public const int COP_INDEX = 0;
+
     public EndScreen blackscreen;
     public PostProcessingProfile postProcessing;
     public GameObject tutorial;
@@ -101,7 +104,7 @@ public class GameManager : MonoBehaviour {
 
     private void SetPolice()
     {
-        GameObject character = this.characters[0];
+        GameObject character = this.characters[COP_INDEX];
 
         CharacterAI ai = character.GetComponent<CharacterAI>();
         float scaleDiference = ai.GetScaleDifference();
@@ -116,7 +119,7 @@ public class GameManager : MonoBehaviour {
 
     private void SetDealer()
     {
-        GameObject character = this.characters[1];
+        GameObject character = this.characters[DEALER_INDEX];
         CharacterAI ia = character.GetComponent<CharacterAI>();
 
         ia.name = "Dealer";
